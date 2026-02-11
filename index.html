@@ -28,30 +28,85 @@
         .menu {
             list-style: none;
             width: 100%;
-            max-width: 500px;
+            max-width: 1200px;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
         }
         .menu li {
-            margin-bottom: 1rem;
+            margin: 0;
         }
         .menu a {
             display: block;
-            padding: 1.2rem 2rem;
+            padding: 1.2rem 1.5rem;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             color: #fff;
             text-decoration: none;
             font-size: 1.2rem;
+            height: 100%;
             transition: background 0.3s, transform 0.2s;
         }
         .menu a:hover {
             background: rgba(255, 255, 255, 0.18);
-            transform: translateX(6px);
+            transform: translateY(-4px);
         }
         .menu .label {
             font-size: 0.85rem;
             color: #999;
             margin-top: 4px;
+        }
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 30, 0.85);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.6rem 2rem;
+            z-index: 10;
+        }
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-section {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .footer-label {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .footer-divider {
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .footer-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #e94560;
+        }
+        .footer-social {
+            color: #666;
+            transition: color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-social:hover {
+            color: #e94560;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -60,9 +115,9 @@
     <p class="subtitle">Select a presentation to view</p>
     <ul class="menu">
         <li>
-            <a href="presentation-alpha/index.html">
-                🚀 Sample Presentation
-                <div class="label">3 slides · Introduction demo</div>
+            <a href="2026-02-18/index.html">
+                [Вебинар] Прожарка резюме 🔥
+                <div class="label" class="webinar">11 slides · Разбираем резюме аналитиков данных</div>
             </a>
         </li>
         <!-- Add more presentations here -->
@@ -75,5 +130,20 @@
         </li>
         -->
     </ul>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <span class="footer-label">Рожкова Наталья | HR</span>
+                <span class="footer-divider">·</span>
+                <a href="mailto:narozhkova53@gmail.com" class="footer-link">📧 narozhkova53@gmail.com</a>
+                <span class="footer-divider">·</span>
+                <a href="https://t.me/narozhkova" target="_blank" class="footer-link">
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-telegram">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
