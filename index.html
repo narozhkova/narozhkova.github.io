@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentations</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 3rem;
+        }
+        .menu {
+            list-style: none;
+            width: 100%;
+            max-width: 500px;
+        }
+        .menu li {
+            margin-bottom: 1rem;
+        }
+        .menu a {
+            display: block;
+            padding: 1.2rem 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .menu a:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateX(6px);
+        }
+        .menu .label {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📽️ Presentations</h1>
+    <p class="subtitle">Select a presentation to view</p>
+    <ul class="menu">
+        <li>
+            <a href="presentation-alpha/index.html">
+                🚀 Sample Presentation
+                <div class="label">3 slides · Introduction demo</div>
+            </a>
+        </li>
+        <!-- Add more presentations here -->
+        <!--
+        <li>
+            <a href="presentation2.html">
+                📊 Another Presentation
+                <div class="label">5 slides · Data overview</div>
+            </a>
+        </li>
+        -->
+    </ul>
+</body>
+</html>
