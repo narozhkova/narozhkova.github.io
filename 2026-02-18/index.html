@@ -909,7 +909,7 @@
             </ul>
         </div>
 
-            <div class="slide" data-slide="11">
+        <div class="slide" data-slide="11">
             <h1>Прожарка🥩🔥</h1>
             <div class="tiles-grid tiles-links">
                 <div class="tile tile-resource">
@@ -936,39 +936,47 @@
         </div>
 
     <div class="controls">
-        <button id="prevBtn" disabled>← Назад</button>
-        <div class="counter" id="counter">1 / 11</div>
-        <button id="nextBtn">Далее →</button>
+        <button onclick="prevSlide()" id="prevBtn" disabled>← Назад</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+        <button onclick="nextSlide()" id="nextBtn">Далее →</button>
     </div>
 
     <script>
+        let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const counter = document.getElementById('counter');
         const totalSlides = slides.length;
-        let currentSlide = 1;
 
-        function showSlide(n) {
-            slides.forEach(s => s.classList.remove('active'));
-            document.querySelector(`[data-slide="${n}"]`).classList.add('active');
-            counter.textContent = `${n} / ${totalSlides}`;
-            prevBtn.disabled = n === 1;
-            nextBtn.disabled = n === totalSlides;
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateButtonStates();
         }
 
-        prevBtn.addEventListener('click', () => {
-            if (currentSlide > 1) { currentSlide--; showSlide(currentSlide); }
-        });
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
 
-        nextBtn.addEventListener('click', () => {
-            if (currentSlide < totalSlides) { currentSlide++; showSlide(currentSlide); }
-        });
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') prevBtn.click();
-            if (e.key === 'ArrowRight') nextBtn.click();
+            if (e.key === 'ArrowRight') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
         });
+
         const overlay = document.getElementById('overlay');
 
         document.querySelectorAll('.hint-btn').forEach(btn => {
@@ -992,6 +1000,9 @@
             document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
             overlay.classList.remove('active');
         });
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        showSlide(0);
     </script>
     <footer class="footer">
         <div class="footer-content">
