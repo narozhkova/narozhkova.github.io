@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вебинар: Как аналитику данных искать работу в 2026 году: обзор площадок и способов взаимодействия с ними</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f7;
+            color: #2d2d2d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 4rem;
+        }
+        .back {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        .back:hover { color: #333; }
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            width: 85%;
+            max-width: 1000px;
+            min-height: 70vh;
+            padding: 3rem 4rem;
+            justify-content: center;
+        }
+        .slide.active { display: flex; }
+        .slide h1 { font-size: 2.8rem; text-align: center; width: 100%; color: #1a1a1a; }
+        .slide h2 { font-size: 2rem; margin-bottom: 0.5rem; color: #060c61; }
+        .slide p {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        .slide blockquote {
+            background: rgba(0, 0, 0, 0.04);
+            border-left: 4px solid #c0392b;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            width: 100%;
+        }
+        .slide ul {
+            padding-left: 1.5rem;
+            line-height: 2;
+            color: #444;
+            font-size: 1.1rem;
+        }
+        .slide ul li { margin-bottom: 0.3rem; }
+        /* Slide subtitle */
+        .slide-subtitle {
+            font-size: 1rem;
+            color: #999;
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Controls */
+        .controls {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .controls button {
+            padding: 0.75rem 1.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #060c61;
+            color: #fff;
+            font-weight: 600;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .controls button:hover { background: #373d8f; }
+        .controls button:disabled { opacity: 0.35; cursor: default; }
+        .counter {
+            font-size: 1.1rem;
+            min-width: 100px;
+            text-align: center;
+            color: #888;
+        }
+        /* Success cards row */
+        .cards-row {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .card {
+            flex: 1;
+            max-width: 280px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 2.5rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        .card-success {
+            border-top: 3px solid #060c61;
+        }
+        .card-success .card-glow {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 0.3rem;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .card-desc {
+            font-size: 0.95rem;
+            color: #777;
+            line-height: 1.5;
+        }
+        @media (max-width: 700px) {
+            .cards-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+        /* Error cards grid */
+        .errors-grid {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr);
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .error-card {
+            position: relative;
+            background: #060c61;
+            border: 1px solid #060c61;
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s, z-index 0s;
+            z-index: 1;
+        }
+        .error-card:hover {
+            background: rgba(202, 228, 240, 0.1);
+            transform: scale(1.10);
+            box-shadow: 0 12px 35px rgba(192, 57, 43, 0.12);
+            z-index: 10;
+        }
+        .error-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .error-text {
+            font-size: 0.95rem;
+            color: #060c61;
+            line-height: 1.4;
+            flex: 1;
+        }
+        @media (max-width: 700px) {
+            .errors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Plan list with hint buttons */
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.15rem;
+            color: #444;
+            position: relative;
+        }
+        .plan-list li:last-child { border-bottom: none; }
+        .plan-list li span { flex: 1; }
+        .hint-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #060c61;
+            background: transparent;
+            color: #060c61;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .hint-btn:hover {
+            background: #373d8f;
+            color: #fff;
+        }
+        /* Popup */
+        .hint-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 700px;
+            width: 90%;
+            z-index: 1000;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.25s ease;
+        }
+        .hint-popup.active { display: block; }
+        .hint-popup blockquote {
+            margin: 0;
+            border-left: 4px solid #060c61;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .hint-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .hint-close:hover { color: #333; }
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        /* Checklist style */
+        .checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.5;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 0.6rem;
+        }
+        .checklist li:hover {
+            background: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        .check {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .checklist.checklist-2col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            flex-direction: unset;
+        }
+        .checklist.checklist-3col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem 2rem;
+            flex-direction: unset;
+        }
+        @media (max-width: 700px) {
+            .checklist.checklist-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Block tiles grid */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+        .tile {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .tile:hover {
+            background: #fafafa;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .tile-icon {
+            font-size: 2.2rem;
+        }
+        .tile-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        /* Centered link under content */
+        .slide-link-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: rgba(192, 57, 43, 0.06);
+            border: 1px solid rgba(192, 57, 43, 0.2);
+            border-radius: 10px;
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .slide-cta:hover {
+            background: rgba(192, 57, 43, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.1);
+        }
+        /* Split layout */
+        .split-layout {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .split-left,
+        .split-right {
+            flex: 1;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.8rem 1.5rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .split-left:hover,
+        .split-right:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+        .split-left {
+            border-top: 3px solid #c0392b;
+        }
+        .split-right {
+            border-top: 3px solid #27ae60;
+        }
+        .split-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .split-icon {
+            font-size: 1.6rem;
+        }
+        .split-header h3 {
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            margin: 0;
+        }
+        .split-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .split-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.6rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .split-list li:last-child {
+            border-bottom: none;
+        }
+        .list-marker {
+            flex-shrink: 0;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        @media (max-width: 700px) {
+            .split-layout {
+                flex-direction: column;
+            }
+        }
+        /* Resource tiles with links */
+        .tile-resource {
+            align-items: center;
+            gap: 1rem;
+        }
+        .tile-text-bold {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .tile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .tile-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: #060c61;
+            border: 1px solid rgba(192, 57, 43, 0.15);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .tile-link:hover {
+            background: #373d8f;
+            transform: translateX(4px);
+        }
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 0.6rem 2rem;
+            z-index: 10;
+        }
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-section {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .footer-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-divider {
+            color: rgba(0, 0, 0, 0.15);
+        }
+        .footer-link {
+            color: #777;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #c0392b;
+        }
+        .footer-social {
+            color: #999;
+            transition: color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-social:hover {
+            color: #c0392b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <a href="../index.html" class="back">← Назад к меню</a>
+
+        <div class="slide active" data-slide="1">
+            <h1>Вебинар: Как аналитику данных искать работу в 2026 году: обзор площадок и способов взаимодействия с ними</h1>
+        </div>
+
+        <div class="slide" data-slide="2">
+            <h2>Обзор рынка</h2>
+            <div class="checklist checklist-3col">
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Аналитика не только для крупных компаний,</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Аналитик - тот, кто предлагает инсайты,</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Вакансий не стало меньше,</span>
+                    </li>
+                </div>
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Выросли требования к джунам,</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Функционал меньше дробится,</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>ИИ упрощает рутину,</span>
+                    </li>
+                    
+                </div>
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>География имеет значение,</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Возвращение в офис,</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Точечный найм.</span>
+                    </li>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="3">
+            <h2>Где искать</h2>
+            <div class="cards-row">
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">👥</span>
+                    <span class="card-title">Нетворкинг</span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">
+                        <svg width="45px" height="45px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-telegram">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                        </svg>
+                    </span>
+                    <span class="card-title">Telegram</span>
+                    <span class="card-desc">getmatch</span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">📑</span>
+                    <span class="card-title">Карьерные страницы</span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">
+                        <svg width="50" height="50" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="50" fill="#E1011C"/>
+                        <path d="M26 34V66H34V54H42V66H50V34H42V46H34V34H26Z" fill="white"/>
+                        <path d="M58 34V66H66V54H74V66H82V34H74V46H66V34H58Z" fill="white"/>
+                        </svg>
+                    </span>
+                    <span class="card-title">HeadHunter</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="4">
+            <h2>ATS - Applicant Tracking Systems</h2>
+            <div class="split-layout">
+                <div class="split-left">
+                    <h3>Фильтры ATS</h3>
+                    <ul>
+                        <li>Ключевым слова из вакансии;</li>
+                        <li>Карьерный трек;</li>
+                        <li>Оформление.</li>
+                    </ul>
+                </div>
+                <div class="split-right">
+                    <h3>Что делать</h3>
+                    <ul>
+                        <li>Никакого креатива;</li>
+                        <li>Стандартные заголовки и термины;</li>
+                        <li>Слова и стек из вакансии;</li>
+                        <li>Цифры и глаголы;</li>
+                        <li>Стандартные шрифты;</li>
+                        <li>Формате .docx или .pdf.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+       
+
+        <div class="slide" data-slide="5">
+            <h2>Работа с HH</h2>
+            <div class="errors-grid">
+                <div class="error-card">
+                    <span class="error-icon">📄</span>
+                    <span class="error-text">Грамотное резюмe</span>
+
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">⬆️</span>
+                    <span class="error-text">Частое поднятие в поиске</span>
+
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">🔤</span>
+                    <span class="error-text">Ключевые слова + стек технологий</span>
+
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">🏃🏻</span>
+                    <span class="error-text">Быстрые ответы</span>
+
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">📝</span>
+                    <span class="error-text">Фразы из вакансии</span>
+
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">💌</span>
+                    <span class="error-text">Сопроводительное письмо</span>
+
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="6">
+            <h2>Структура сопроводительного письма</h2>
+            <ul class="plan-list">
+                <li>
+                    <span>Приветствие + вакансия и компания</span>
+                    <button class="hint-btn" data-hint="hint-cover-1">?</button>
+                    <div class="hint-popup" id="hint-cover-1">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Добрый день! Меня зовут Наталья.<br>Меня заинтересовала вакансия Аналитика данных в вашей компании Ромашка. Я давно слежу за вашим продуктом, мне импонирует ваш подход к сегментации аудитории, который вы осуществили в последнем обновлении.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Кто вы?</span>
+                    <button class="hint-btn" data-hint="hint-cover-2">?</button>
+                    <div class="hint-popup" id="hint-cover-2">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Я опытный аналитик данных (работаю на аналогичных должностях 3 года) с бэкграундом в финансах и банковской сфере. Мой основной фокус - продуктовая аналитика и автоматизация отчетности.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Почему именно вы?</span>
+                    <button class="hint-btn" data-hint="hint-cover-3">?</button>
+                    <div class="hint-popup" id="hint-cover-3">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Почему именно я буду полезна вашей команде:<br>
+                            <ul>
+                                <li>Умею работать с реальными рыночными данными: быстро нахожу закономерности в «сырых» выгрузках и умею отделять сезонные колебания от реальных трендов.</li><br>
+                                <li>Оптимизирую процессы: внедрила систему раннего обнаружения аномалий в данных (настроила Telegram-бота, который мгновенно уведомляет команду при отклонении метрик более чем на 15%. Теперь инциденты фиксируются в течение часа, а не суток).</li><br>
+                                <li>Владею техническим стеком: свободно владею SQL (сложные запросы, оконные функции, CTE) и Python (Pandas, NumPy). В рамках проекта по анализу воронки продаж оптимизировала SQL-запросы, что ускорило сборку отчетности в 3 раза.</li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Soft Skills</span>
+                    <button class="hint-btn" data-hint="hint-cover-4">?</button>
+                    <div class="hint-popup" id="hint-cover-4">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Я не просто «выгружаю данные», а перевожу их на язык бизнеса. Моя фишка - умение визуализировать сложные метрики так, что их понимает даже нетехнический отдел.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Призыв к действию</span>
+                    <button class="hint-btn" data-hint="hint-cover-5">?</button>
+                    <div class="hint-popup" id="hint-cover-5">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Буду рада обсудить, как мой опыт поможет вашей команде улучшить показатели и ускорить процессы.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Контакты и ссылки + ФИ</span>
+                    <button class="hint-btn" data-hint="hint-cover-6">?</button>
+                    <div class="hint-popup" id="hint-cover-6">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Ссылка на мое портфолио:<br>Telegram:<br>Телефон:<br>С уважением, Рожкова Наталья</blockquote>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="slide" data-slide="7">
+            <h2>Поиск: внешний вид</h2>
+            <div class="tiles-grid tiles-links">
+                <div class="tile tile-resource">
+                    <span class="tile-text-bold">Со стороны соискателя</span>
+                    <div class="tile-links">
+                        <a href="https://hh.ru" target="_blank" class="tile-link">Пример</a>
+                    </div>
+                </div>
+                <div class="tile tile-resource">
+                    <span class="tile-text-bold">Со стороны работодателя</span>
+                    <div class="tile-links">
+                        <a href="https://hh.ru/search/vacancy/advanced?hhtmFrom=main" target="_blank" class="tile-link">Пример</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="8">
+            <h2>Как искать</h2>
+            <div class="tiles-grid">
+                <div class="tile">
+                    <span class="tile-icon">💻</span>
+                    <span class="tile-text">Ключевые слова + стек</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🔍</span>
+                    <span class="tile-text">Где искать ключевые слова</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🔀</span>
+                    <span class="tile-text">Условные операторы</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🩹</span>
+                    <span class="tile-text">Исключение слов</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">📅</span>
+                    <span class="tile-text">По дате изменения</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="9">
+            <h2>Что делать с сопроводительным письмом</h2>
+            <div class="tiles-grid">
+                <div class="tile">
+                    <span class="tile-icon">📝</span>
+                    <span class="tile-text">3–4 абзаца без витиеватых фраз</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🧱</span>
+                    <span class="tile-text">Структурированный текст с понятными и логичными абзацами</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">💼</span>
+                    <span class="tile-text">Понятный рассказ о своем опыте с бенефитами для компании</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🎯</span>
+                    <span class="tile-text">Мотивация к работе на этой должности в этой компании</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🔑</span>
+                    <span class="tile-text">С фразами из самой вакансии и ключевыми словами</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="10">
+            <h2>Структура сопроводительного письма</h2>
+            <ul class="plan-list">
+                <li>
+                    <span>Приветствие + вакансия и компания</span>
+                    <button class="hint-btn" data-hint="hint-cover-1">?</button>
+                    <div class="hint-popup" id="hint-cover-1">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Добрый день! Меня зовут Наталья.<br>Меня заинтересовала вакансия Аналитика данных в вашей компании Ромашка. Я давно слежу за вашим продуктом, мне импонирует ваш подход к сегментации аудитории, который вы осуществили в последнем обновлении.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Кто вы?</span>
+                    <button class="hint-btn" data-hint="hint-cover-2">?</button>
+                    <div class="hint-popup" id="hint-cover-2">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Я опытный аналитик данных (работаю на аналогичных должностях 3 года) с бэкграундом в финансах и банковской сфере. Мой основной фокус - продуктовая аналитика и автоматизация отчетности.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Почему именно вы?</span>
+                    <button class="hint-btn" data-hint="hint-cover-3">?</button>
+                    <div class="hint-popup" id="hint-cover-3">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Почему именно я буду полезна вашей команде:<br>
+                            <ul>
+                                <li>Умею работать с реальными рыночными данными: быстро нахожу закономерности в «сырых» выгрузках и умею отделять сезонные колебания от реальных трендов.</li><br>
+                                <li>Оптимизирую процессы: внедрила систему раннего обнаружения аномалий в данных (настроила Telegram-бота, который мгновенно уведомляет команду при отклонении метрик более чем на 15%. Теперь инциденты фиксируются в течение часа, а не суток).</li><br>
+                                <li>Владею техническим стеком: свободно владею SQL (сложные запросы, оконные функции, CTE) и Python (Pandas, NumPy). В рамках проекта по анализу воронки продаж оптимизировала SQL-запросы, что ускорило сборку отчетности в 3 раза.</li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Soft Skills</span>
+                    <button class="hint-btn" data-hint="hint-cover-4">?</button>
+                    <div class="hint-popup" id="hint-cover-4">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Я не просто «выгружаю данные», а перевожу их на язык бизнеса. Моя фишка - умение визуализировать сложные метрики так, что их понимает даже нетехнический отдел.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Призыв к действию</span>
+                    <button class="hint-btn" data-hint="hint-cover-5">?</button>
+                    <div class="hint-popup" id="hint-cover-5">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Буду рада обсудить, как мой опыт поможет вашей команде улучшить показатели и ускорить процессы.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Контакты и ссылки + ФИ</span>
+                    <button class="hint-btn" data-hint="hint-cover-6">?</button>
+                    <div class="hint-popup" id="hint-cover-6">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Ссылка на мое портфолио:<br>Telegram:<br>Телефон:<br>С уважением, Рожкова Наталья</blockquote>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="slide" data-slide="11">
+            <h1>Прожарка🥩🔥</h1>
+            <div class="tiles-grid tiles-links">
+                <div class="tile tile-resource">
+                    <span class="tile-text-bold">Ольга</span>
+                    <div class="tile-links">
+                        <a href="https://drive.google.com/file/d/1NESogqlljsiXyMWek99fprFyKIzPGRS2/view?usp=sharing" target="_blank" class="tile-link">Аналитик данных</a>
+                        <a href="https://drive.google.com/file/d/164bVlSn8sg5U-pVERamXugsoYWmz8Dky/view?usp=sharing" target="_blank" class="tile-link">Продуктовый аналитик</a>
+                        <a href="https://docs.google.com/document/d/1jWKe1fUwpLIu6fBKM1UXsa0CHrTEBzvLbhHimIaSQnk/edit?usp=drive_link" target="_blank" class="tile-link">Сопроводительное письмо</a>
+                    </div>
+                </div>
+                <div class="tile tile-resource">
+                    <span class="tile-text-bold">Светлана</span>
+                    <div class="tile-links">
+                        <a href="https://drive.google.com/file/d/1OcrVABXi9qQWTf_wIHJwLmmwV2acKeO9/view?usp=sharing" target="_blank" class="tile-link">Data analyst</a>
+                    </div>
+                </div>
+                <div class="tile tile-resource">
+                    <span class="tile-text-bold">Андрей</span>
+                    <div class="tile-links">
+                        <a href="https://drive.google.com/file/d/1dse9sJYs_HtsjhVk3sQn6xhBwtJQNmus/view?usp=sharing" target="_blank" class="tile-link">Аналитик</a>
+                    </div>
+                </div>
+                <div class="tile tile-resource">
+                    <span class="tile-text-bold">Николай</span>
+                    <div class="tile-links">
+                        <a href="https://docs.google.com/document/d/12hXYfM3WZU6gPPXVZ_98RJtQad0M89Gg/edit?usp=sharing&ouid=110285589289983357646&rtpof=true&sd=true" target="_blank" class="tile-link">Аналитик</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()" id="prevBtn" disabled>← Назад</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+        <button onclick="nextSlide()" id="nextBtn">Далее →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        const overlay = document.getElementById('overlay');
+
+        document.querySelectorAll('.hint-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const popup = document.getElementById(btn.dataset.hint);
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                popup.classList.add('active');
+                overlay.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.hint-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                overlay.classList.remove('active');
+            });
+        });
+
+        overlay.addEventListener('click', () => {
+            document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        showSlide(0);
+    </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <span class="footer-label">Рожкова Наталья | HR</span>
+                <span class="footer-divider">·</span>
+                <a href="mailto:narozhkova53@gmail.com" class="footer-link">📧 narozhkova53@gmail.com</a>
+                <span class="footer-divider">·</span>
+                <a href="https://t.me/narozhkova" target="_blank" class="footer-link">
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-telegram">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
