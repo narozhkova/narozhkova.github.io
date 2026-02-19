@@ -345,6 +345,92 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Steps vertical rows */
+        .steps-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .step-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0.6rem;
+            width: 100%;
+            transition: transform 0.2s;
+            min-height: 80px;
+        }
+        .step-row:hover {
+            transform: translateX(4px);
+        }
+        .step-problem {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 1.2rem 1.2rem;
+            width: 280px;
+            flex-shrink: 0;
+        }
+        .step-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f7;
+            color: #060c61;
+            font-size: 2rem;
+            font-weight: 700;
+            width: 40px;
+            flex-shrink: 0;
+        }
+        .step-solution {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 1.2rem 1.2rem;
+            flex: 1;
+        }
+        .step-solution span {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.5;
+        }
+        @media (max-width: 700px) {
+            .step-row {
+                flex-direction: column;
+                align-items: stretch;
+                min-height: unset;
+            }
+            .step-problem {
+                border-radius: 10px 10px 0 0;
+                width: 100%;
+            }
+            .step-connector {
+                width: 100%;
+                height: 30px;
+            }
+            .step-solution {
+                border-radius: 0 0 10px 10px;
+                border-left: 1px solid rgba(131, 179, 234, 0.2);
+            }
+        }
+        .split-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #c0392b 30%, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            font-weight: 900;
+            width: 30px;
+            flex-shrink: 0;
+        }
         /* Block tiles grid */
         .tiles-grid {
             display: grid;
@@ -663,6 +749,7 @@
                         <li>Оформление.</li>
                     </ul>
                 </div>
+                <div class="split-arrow">→</div>
                 <div class="split-right">
                     <h3>Что делать</h3>
                     <ul>
@@ -676,8 +763,6 @@
                 </div>
             </div>
         </div>
-
-       
 
         <div class="slide" data-slide="5">
             <h2>Работа с HH</h2>
@@ -846,63 +931,49 @@
 
 
         <div class="slide" data-slide="10">
-            <h2>Структура сопроводительного письма</h2>
-            <ul class="plan-list">
-                <li>
-                    <span>Приветствие + вакансия и компания</span>
-                    <button class="hint-btn" data-hint="hint-cover-1">?</button>
-                    <div class="hint-popup" id="hint-cover-1">
-                        <button class="hint-close">&times;</button>
-                        <blockquote>Добрый день! Меня зовут Наталья.<br>Меня заинтересовала вакансия Аналитика данных в вашей компании Ромашка. Я давно слежу за вашим продуктом, мне импонирует ваш подход к сегментации аудитории, который вы осуществили в последнем обновлении.</blockquote>
+            <h2>Этапы и проблемы</h2>
+            <p class="slide-subtitle">Что делать на каждом этапе воронки</p>
+            <div class="steps-vertical">
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Низкие просмотры</span>
                     </div>
-                </li>
-                <li>
-                    <span>Кто вы?</span>
-                    <button class="hint-btn" data-hint="hint-cover-2">?</button>
-                    <div class="hint-popup" id="hint-cover-2">
-                        <button class="hint-close">&times;</button>
-                        <blockquote>Я опытный аналитик данных (работаю на аналогичных должностях 3 года) с бэкграундом в финансах и банковской сфере. Мой основной фокус - продуктовая аналитика и автоматизация отчетности.</blockquote>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Чаще обновлять, поработать над названием, добавить ключевые слова;</span>
                     </div>
-                </li>
-                <li>
-                    <span>Почему именно вы?</span>
-                    <button class="hint-btn" data-hint="hint-cover-3">?</button>
-                    <div class="hint-popup" id="hint-cover-3">
-                        <button class="hint-close">&times;</button>
-                        <blockquote>Почему именно я буду полезна вашей команде:<br>
-                            <ul>
-                                <li>Умею работать с реальными рыночными данными: быстро нахожу закономерности в «сырых» выгрузках и умею отделять сезонные колебания от реальных трендов.</li><br>
-                                <li>Оптимизирую процессы: внедрила систему раннего обнаружения аномалий в данных (настроила Telegram-бота, который мгновенно уведомляет команду при отклонении метрик более чем на 15%. Теперь инциденты фиксируются в течение часа, а не суток).</li><br>
-                                <li>Владею техническим стеком: свободно владею SQL (сложные запросы, оконные функции, CTE) и Python (Pandas, NumPy). В рамках проекта по анализу воронки продаж оптимизировала SQL-запросы, что ускорило сборку отчетности в 3 раза.</li>
-                            </ul>
-                        </blockquote>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Смотрят, но не приглашают</span>
                     </div>
-                </li>
-                <li>
-                    <span>Soft Skills</span>
-                    <button class="hint-btn" data-hint="hint-cover-4">?</button>
-                    <div class="hint-popup" id="hint-cover-4">
-                        <button class="hint-close">&times;</button>
-                        <blockquote>Я не просто «выгружаю данные», а перевожу их на язык бизнеса. Моя фишка - умение визуализировать сложные метрики так, что их понимает даже нетехнический отдел.</blockquote>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Добавить стек и цифры в достижения, оставить ссылку на портфолио и откликаться с сопроводительным письмом;</span>
                     </div>
-                </li>
-                <li>
-                    <span>Призыв к действию</span>
-                    <button class="hint-btn" data-hint="hint-cover-5">?</button>
-                    <div class="hint-popup" id="hint-cover-5">
-                        <button class="hint-close">&times;</button>
-                        <blockquote>Буду рада обсудить, как мой опыт поможет вашей команде улучшить показатели и ускорить процессы.</blockquote>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Отказ после интервью</span>
                     </div>
-                </li>
-                <li>
-                    <span>Контакты и ссылки + ФИ</span>
-                    <button class="hint-btn" data-hint="hint-cover-6">?</button>
-                    <div class="hint-popup" id="hint-cover-6">
-                        <button class="hint-close">&times;</button>
-                        <blockquote>Ссылка на мое портфолио:<br>Telegram:<br>Телефон:<br>С уважением, Рожкова Наталья</blockquote>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Тренировать этот этап;</span>
                     </div>
-                </li>
-            </ul>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Нет оффера</span>
+                    </div>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Работать над подачей себя и пониманием бизнеса.</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="slide" data-slide="11">
