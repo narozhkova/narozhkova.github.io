@@ -680,123 +680,72 @@
             color: #c0392b;
             transform: translateY(-2px);
         }
-        #slide-roles {
-            display: none; /* Скрыт по умолчанию, если нет класса active */
-            flex-direction: column;
-            align-items: center;
-            padding: 40px;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                .slide[data-slide="2"] {
+            font-size: 0.85rem;
         }
-
-        #slide-roles.active {
-            display: flex;
+        .slide[data-slide="2"] > div {
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid rgba(6, 12, 97, 0.25);
+            margin-top: 1.5rem;
         }
-
-        #slide-roles h2 {
-            margin-bottom: 30px;
-            color: #2d3436;
-            font-size: 2.2rem;
-        }
-
-        /* Контейнер таблицы */
-        #slide-roles .table-wrapper {
-            width: 100%;
-            max-width: 1100px;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            overflow: hidden;
-            border: 1px solid #eee;
-        }
-
-        #slide-roles table {
+        .slide[data-slide="2"] table {
             width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
+            font-family: inherit;
+            font-size: 0.85rem;
         }
-
-        /* Шапка */
-        #slide-roles th {
-            background: #f8faff;
-            padding: 20px;
-            text-align: center;
+        .slide[data-slide="2"] thead th {
+            background: rgba(6, 12, 97, 0.4);
+            color: #fff;
+            padding: 0.9rem 0.7rem;
+            text-align: left;
             font-weight: 600;
-            color: #4a90e2;
-            border-bottom: 2px solid #edf2f7;
-            font-size: 1.1rem;
+            font-size: 0.85rem;
+            border-bottom: 2px solid rgba(6, 12, 97, 0.6);
         }
-
-        #slide-roles th:first-child {
-            width: 15%;
-            background: #ffffff;
-        }
-
-        /* Ячейки */
-        #slide-roles td {
-            padding: 15px 20px;
+        .slide[data-slide="2"] tbody td {
+            padding: 0.7rem;
+            border-bottom: 1px solid rgba(6, 12, 97, 0.1);
+            color: black;
             vertical-align: top;
-            border-bottom: 1px solid #f0f0f0;
             line-height: 1.5;
-            font-size: 0.95rem;
-            color: #444;
+            font-size: 0.85rem;
         }
-
-        /* Первый столбец (заголовки строк) */
-        #slide-roles td:first-child {
-            font-weight: bold;
-            color: #636e72;
-            background: #fafafa;
-            text-align: right;
-            padding-right: 25px;
-            border-right: 1px solid #f0f0f0;
-            vertical-align: middle;
+        .slide[data-slide="2"] tbody td:first-child {
+            color: #373d8f;
+            font-weight: 600;
+            white-space: nowrap;
         }
-
-        /* Списки внутри */
-        #slide-roles ul {
+        .slide[data-slide="2"] tbody tr:hover td {
+            background: rgba(6, 12, 97, 0.12);
+            transition: background 0.2s;
+        }
+        .slide[data-slide="2"] table ul,
+        .slide[data-slide="2"] table li,
+        .slide[data-slide="2"] table p {
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: black;
+        }
+        .slide[data-slide="2"] table ul {
             margin: 0;
-            padding-left: 15px;
-            list-style: none;
+            padding-left: 1.1rem;
         }
-
-        #slide-roles li {
-            position: relative;
-            margin-bottom: 6px;
+        .slide[data-slide="2"] table li {
+            margin-bottom: 0.2rem;
         }
-
-        #slide-roles li::before {
-            content: "•";
-            color: #4a90e2;
-            font-weight: bold;
-            position: absolute;
-            left: -15px;
+                .slide[data-slide="2"] tbody td {
+            border-right: 1px solid rgba(6, 12, 97, 0.2);
         }
-
-        /* Нижняя строка (Итог) */
-        #slide-roles tr:last-child td {
-            background: #fdfdfd;
-            font-style: italic;
-            border-bottom: none;
+        .slide[data-slide="2"] tbody td:last-child {
+            border-right: none;
         }
-
-        #slide-roles .nav-btn {
-            padding: 10px 25px;
-            border: 1px solid #4a90e2;
-            background: transparent;
-            color: #4a90e2;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
+        .slide[data-slide="2"] thead th {
+            border-right: 1px solid rgba(6, 12, 97, 0.3);
         }
-
-        #slide-roles .nav-btn:hover {
-            background: #4a90e2;
-            color: white;
-            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        .slide[data-slide="2"] thead th:last-child {
+            border-right: none;
         }
     </style>
 </head>
@@ -808,9 +757,9 @@
             <h1>Консультация: "Продающие материалы кандидата на рынке труда 2026 года"</h1>
         </div>
 
-        <div class="slide" data-slide="2" id="slide-roles">
+        <div class="slide" data-slide="2">
             <h2>Сравнение ролей</h2>
-            <div class="table-wrapper">
+            <div>
                 <table>
                     <thead>
                         <tr>
@@ -827,14 +776,14 @@
                             <td>Понять потребности бизнеса и пользователей и перевести их в требования для решения;</td>
                             <td>Отвечать на вопросы бизнеса с помощью данных;</td>
                             <td>Помогать команде принимать решения по развитию продукта, опираясь на поведение пользователей и метрики;</td>
-                            <td>Развивать продукт и бизнес-результат.</div>
+                            <td>Развивать продукт и бизнес-результат.</td>
                         </tr>
                         <tr>
                             <td>Фокус</td>
                             <td>Процессы, ценность для бизнеса, требования;</td>
                             <td>Цифры, метрики, данные;</td>
                             <td>Пльзовательский опыт внутри продукта;</td>
-                            <td>Стратегия, рост, метрики продукта.<td>
+                            <td>Стратегия, рост, метрики продукта.</td>
                         </tr>
                         <tr>
                             <td>Задачи</td>
