@@ -420,6 +420,19 @@
             gap: 1.5rem;
             width: 100%;
         }
+        .split-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #c0392b 30%, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            font-weight: 900;
+            width: 30px;
+            flex-shrink: 0;
+        }
         .split-left,
         .split-right {
             flex: 1;
@@ -578,12 +591,14 @@
 
         <div class="slide" data-slide="2">
             <div>
-                <h2>План рассказа о вакансии</h2>
-                <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <h2 style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span>План рассказа о вакансии</span>
+                    <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <rect width="100" height="100" rx="20" fill="#EF3124"/>
                         <path d="M50 20L25 75H38L42 65H58L62 75H75L50 20ZM50 38L55 53H45L50 38Z" fill="white"/>
                         <rect x="42" y="68" width="16" height="4" fill="#EF3124"/>
                     </svg>
+                </h2>
             </div>
             <div class="checklist checklist-2col">
                 <div>
@@ -633,7 +648,7 @@
                     <ul>
                         <li>Крупнейший в России частный банк, сейчас - технологическая компания   с банковской лицензией. </li>
                         <li>Департамент стратегии - одно из самых престижных подразделений в структуре центрального офиса.</li>
-                        <li>*Сайт с вакансиями - https://job.alfabank.ru/ </li>
+                        <li>*Сайт с вакансиями - <a href="https://job.alfabank.ru/" target="_blank">https://job.alfabank.ru/</a></li>
                     </ul>
                 </div>
                 <div class="split-right">
