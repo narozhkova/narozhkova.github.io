@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/ico" href="../ico/favicon.ico" />
+    <title>Карьерная консультация “Разбор вакансии руководителя проектов в департаменте стратегии Альфа-Банка”</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f7;
+            color: #2d2d2d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 4rem;
+        }
+        .back {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        .back:hover { color: #333; }
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            width: 85%;
+            max-width: 1000px;
+            min-height: 70vh;
+            padding: 3rem 4rem;
+            justify-content: center;
+        }
+        .slide.active { display: flex; }
+        .slide h1 { font-size: 2.8rem; text-align: center; width: 100%; color: #1a1a1a; }
+        .slide h2 { font-size: 2rem; margin-bottom: 0.5rem; color: #c0392b; }
+        .slide p {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        .slide blockquote {
+            background: rgba(0, 0, 0, 0.04);
+            border-left: 4px solid #c0392b;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            width: 100%;
+        }
+        .slide ul {
+            padding-left: 1.5rem;
+            line-height: 2;
+            color: #444;
+            font-size: 1.1rem;
+        }
+        .slide ul li { margin-bottom: 0.3rem; }
+        /* Slide subtitle */
+        .slide-subtitle {
+            font-size: 1rem;
+            color: #999;
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Controls */
+        .controls {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .controls button {
+            padding: 0.75rem 1.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #c0392b;
+            color: #fff;
+            font-weight: 600;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .controls button:hover { background: #a93226; }
+        .controls button:disabled { opacity: 0.35; cursor: default; }
+        .counter {
+            font-size: 1.1rem;
+            min-width: 100px;
+            text-align: center;
+            color: #888;
+        }
+        /* Success cards row */
+        .cards-row {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .card {
+            flex: 1;
+            max-width: 280px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 2.5rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        .card-success {
+            border-top: 3px solid #27ae60;
+        }
+        .card-success .card-glow {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 0.3rem;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .card-desc {
+            font-size: 0.95rem;
+            color: #777;
+            line-height: 1.5;
+        }
+        @media (max-width: 700px) {
+            .cards-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+        /* Error cards grid */
+        .errors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .error-card {
+            position: relative;
+            background: rgba(192, 57, 43, 0.05);
+            border: 1px solid rgba(192, 57, 43, 0.15);
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s, z-index 0s;
+            z-index: 1;
+        }
+        .error-card:hover {
+            background: rgba(192, 57, 43, 0.1);
+            transform: scale(1.10);
+            box-shadow: 0 12px 35px rgba(192, 57, 43, 0.12);
+            z-index: 10;
+        }
+        .error-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .error-text {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .error-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #c0392b;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(192, 57, 43, 0.3);
+        }
+        @media (max-width: 700px) {
+            .errors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Plan list with hint buttons */
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.15rem;
+            color: #444;
+            position: relative;
+        }
+        .plan-list li:last-child { border-bottom: none; }
+        .plan-list li span { flex: 1; }
+        .hint-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #c0392b;
+            background: transparent;
+            color: #c0392b;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .hint-btn:hover {
+            background: #c0392b;
+            color: #fff;
+        }
+        /* Popup */
+        .hint-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 700px;
+            width: 90%;
+            z-index: 1000;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.25s ease;
+        }
+        .hint-popup.active { display: block; }
+        .hint-popup blockquote {
+            margin: 0;
+            border-left: 4px solid #c0392b;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .hint-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .hint-close:hover { color: #333; }
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        /* Checklist style */
+        .checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.5;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 0.6rem;
+        }
+        .checklist li:hover {
+            background: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        .check {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .checklist.checklist-2col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            flex-direction: unset;
+        }
+        @media (max-width: 700px) {
+            .checklist.checklist-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Block tiles grid */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+        .tile {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .tile:hover {
+            background: #fafafa;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .tile-icon {
+            font-size: 2.2rem;
+        }
+        .tile-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        /* Centered link under content */
+        .slide-link-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: rgba(192, 57, 43, 0.06);
+            border: 1px solid rgba(192, 57, 43, 0.2);
+            border-radius: 10px;
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .slide-cta:hover {
+            background: rgba(192, 57, 43, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.1);
+        }
+        /* Split layout */
+        .split-layout {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .split-left,
+        .split-right {
+            flex: 1;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.8rem 1.5rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .split-left:hover,
+        .split-right:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+        .split-left {
+            border-top: 3px solid #c0392b;
+        }
+        .split-right {
+            border-top: 3px solid #27ae60;
+        }
+        .split-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .split-icon {
+            font-size: 1.6rem;
+        }
+        .split-header h3 {
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            margin: 0;
+        }
+        .split-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .split-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.6rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .split-list li:last-child {
+            border-bottom: none;
+        }
+        .list-marker {
+            flex-shrink: 0;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        @media (max-width: 700px) {
+            .split-layout {
+                flex-direction: column;
+            }
+        }
+        /* Resource tiles with links */
+        .tile-resource {
+            align-items: center;
+            gap: 1rem;
+        }
+        .tile-text-bold {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .tile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .tile-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: rgba(192, 57, 43, 0.05);
+            border: 1px solid rgba(192, 57, 43, 0.15);
+            border-radius: 8px;
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .tile-link:hover {
+            background: rgba(192, 57, 43, 0.1);
+            transform: translateX(4px);
+        }
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 0.6rem 2rem;
+            z-index: 10;
+        }
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-section {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .footer-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-divider {
+            color: rgba(0, 0, 0, 0.15);
+        }
+        .footer-link {
+            color: #777;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #c0392b;
+        }
+        .footer-social {
+            color: #999;
+            transition: color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-social:hover {
+            color: #c0392b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <a href="../index.html" class="back">← Назад к меню</a>
+
+        <div class="slide active" data-slide="1">
+            <h1>Карьерная консультация “Разбор вакансии руководителя проектов в департаменте стратегии Альфа-Банка” 🔥</h1>
+        </div>
+
+        <div class="slide" data-slide="2">
+            <div>
+                <h2>План рассказа о вакансии</h2>
+                <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="100" rx="20" fill="#EF3124"/>
+                        <path d="M50 20L25 75H38L42 65H58L62 75H75L50 20ZM50 38L55 53H45L50 38Z" fill="white"/>
+                        <rect x="42" y="68" width="16" height="4" fill="#EF3124"/>
+                    </svg>
+            </div>
+            <div class="checklist checklist-2col">
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Что это за компания?</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Что за вакансия предлагается и кто такой в данном случае "Руководитель проектов"?</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Что нужно будет делать на этой должности?</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Что будет требоваться от кандидата??</span>
+                    </li>
+                </div>
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Как будет выглядеть процесс отбора и какие могут быть этапы?</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Почему мне как кандидату понравилась эта вакансия?</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Почему я как кандидат подхожу на эту должность?</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Какие проблемы могут возникнуть относительно моей кандидатуры??</span>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="3">
+            <h2>Описание вакансии
+            </h2>
+            <div class="split-layout">
+                <div class="split-left">
+                    <h3>Компания Альфа-Банк </h3>
+                    <ul>
+                        <li>Крупнейший в России частный банк, сейчас - технологическая компания   с банковской лицензией. </li>
+                        <li>Департамент стратегии - одно из самых престижных подразделений в структуре центрального офиса.</li>
+                        <li>*Сайт с вакансиями - https://job.alfabank.ru/ </li>
+                    </ul>
+                </div>
+                <div class="split-right">
+                    <h3>Должность</h3>
+                    <ul>
+                        <li>Руководитель проектов в департаменте стратегии - ключевая управленческая роль. это внутренний консультант высокого уровня. </li>
+                        <li>Это - внутренний консультант высокого уровня.</li>
+                        <li>Архитектор смыслов + Драйвер изменений: отвечает за создание стратегии с нуля, ее защиту перед топ-менеджментом и координацию работы кросс-функциональных команд.</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="4">
+            <h2>Обязанности и функции</h2>
+            <div class="tiles-grid">
+                <div class="tile">
+                    <span class="tile-icon">🚀</span>
+                    <span class="tile-text">Задача: согласовать интересы разных департаментов ради единой стратегической цели</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🎯</span>
+                    <span class="tile-text">Полная ответственность за стратегию определенного направления </span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🧑</span>
+                    <span class="tile-text">Руководство командой из 2-4 аналитиков</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🗣️</span>
+                    <span class="tile-text">Прямое взаимодействие со стейкхолдерами и топ-менеджментом банка</span>
+                    </span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🔥</span>
+                    <span class="tile-text">Личное создание ключевых презентаций и концепций</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">⚙️</span>
+                    <span class="tile-text">В текущей стратегии - AI-проекты</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" data-slide="5">
+            <h2>Трудоустройство: будет сложно!</h2>
+            <div class="split-layout">
+                <div class="split-left">
+                    <h3>Требования</h3>
+                    <ul>
+                        <li>1-3 года в консалтинге из большой четверки, инвестбанках или в крупных финтехах;</li>
+                        <li>Владение аналитикой (хаотичные данные => понятные управленческие выводы);</li>
+                        <li>Опыт взаимодействия с кросс-функциональными командами  и ТОПами;</li>
+                        <li>Опыт работы с AI.</li>
+                    </ul>
+                </div>
+                <div class="split-arrow">→</div>
+                <div class="split-right">
+                    <h3>Отбор (обычно в 5-7 этапов)</h3>
+                    <ul>
+                        <li>Первичный скрининг и общение с HR;</li>
+                        <li>Специализированное тестирование (SHL или Talent Q);</li>
+                        <li>Кейс-интервью;</li>
+                        <li>Техническое интервью;</li>
+                        <li>Общение с ТОП-менеджментом.</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="6">
+            <h2>Преимущества вакансии</h2>
+            <div class="cards-row">
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Хороший и известный работодатель</span>
+                    <span class="card-desc">современнная корпоративная культура + высокая зарплата</span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Масштабная работа, прямое огромное влияние на бизнес</span>
+
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Много аналитической работы и сильный технологический стек</span>
+
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Прямой контакт с первыми лицами компании</span>
+                    <span class="card-desc">короткий путь к карьерной лестнице</span>
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="7">
+            <h2>Преимущества кандидата
+            </h2>
+            <div class="tiles-grid">
+                <div class="tile">
+                    <span class="tile-icon">🎓</span>
+                    <span class="tile-text">Аналитическое обучение и MBA</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon"></span>
+                    <span class="tile-text">Знание большого количества инструментов</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🔥</span>
+                    <span class="tile-text">Опыт трансформации в "Техноприборе"</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🗒️</span>
+                    <span class="tile-text">Навыки фасилитации</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🤝</span>
+                    <span class="tile-text">Высокая адаптивность</span>
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="8">
+            <h2>Что может стать проблемой
+            </h2>
+            <div class="errors-grid">
+                <div class="error-card">
+                    <span class="error-icon">🌱</span>
+                    <span class="error-text">Опыт в резюме - нет больших и известных компаний</span>
+                    <span class="error-badge">!</span>
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">🚫</span>
+                    <span class="error-text">Нет прямого опыта в финтехе</span>
+                    <span class="error-badge">!</span>
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">📦</span>
+                    <span class="error-text">Масштабы кейсов не сравнимы с теми, которые будет предлагать крупный банк</span>
+                    <span class="error-badge">!</span>
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">📝</span>
+                    <span class="error-text">В резюме нет информации про работу с AI</span>
+                    <span class="error-badge">!</span>
+                </div>
+                <div class="error-card">
+                    <span class="error-icon">🌊</span>
+                    <span class="error-text">Пока - низкий уровень презентационных навыков</span>
+                    <span class="error-badge">!</span>
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="controls">
+        <button onclick="prevSlide()" id="prevBtn" disabled>← Назад</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+        <button onclick="nextSlide()" id="nextBtn">Далее →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        const overlay = document.getElementById('overlay');
+
+        document.querySelectorAll('.hint-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const popup = document.getElementById(btn.dataset.hint);
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                popup.classList.add('active');
+                overlay.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.hint-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                overlay.classList.remove('active');
+            });
+        });
+
+        overlay.addEventListener('click', () => {
+            document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        showSlide(0);
+    </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <span class="footer-label">Рожкова Наталья | HR</span>
+                <span class="footer-divider">·</span>
+                <a href="mailto:narozhkova53@gmail.com" class="footer-link">📧 narozhkova53@gmail.com</a>
+                <span class="footer-divider">·</span>
+                <a href="https://t.me/narozhkova" target="_blank" class="footer-link">
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-telegram">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
