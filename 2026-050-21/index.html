@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/ico" href="../ico/favicon.ico" />
+    <title>Вебинар:Как аналитику данных оценивать вакансии на рынке труда и делать отклики эффективно</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f7;
+            color: #2d2d2d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 4rem;
+        }
+        .back {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        .back:hover { color: #333; }
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            width: 85%;
+            max-width: 1000px;
+            min-height: 70vh;
+            padding: 3rem 4rem;
+            justify-content: center;
+        }
+        .slide.active { display: flex; }
+        .slide h1 { font-size: 2.8rem; text-align: center; width: 100%; color: #1a1a1a; }
+        .slide h2 { font-size: 2rem; margin-bottom: 0.5rem; color: #c0392b; }
+        .slide p {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        .slide blockquote {
+            background: rgba(0, 0, 0, 0.04);
+            border-left: 4px solid #c0392b;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            width: 100%;
+        }
+        .slide ul {
+            padding-left: 1.5rem;
+            line-height: 2;
+            color: #444;
+            font-size: 1.1rem;
+        }
+        .slide ul li { margin-bottom: 0.3rem; }
+        /* Slide subtitle */
+        .slide-subtitle {
+            font-size: 1rem;
+            color: #999;
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Controls */
+        .controls {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .controls button {
+            padding: 0.75rem 1.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #c0392b;
+            color: #fff;
+            font-weight: 600;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .controls button:hover { background: #a93226; }
+        .controls button:disabled { opacity: 0.35; cursor: default; }
+        .counter {
+            font-size: 1.1rem;
+            min-width: 100px;
+            text-align: center;
+            color: #888;
+        }
+        /* Success cards row */
+        .cards-row {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .card {
+            flex: 1;
+            max-width: 280px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 2.5rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        .card-success {
+            border-top: 3px solid #27ae60;
+        }
+        .card-success .card-glow {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 0.3rem;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .card-desc {
+            font-size: 0.95rem;
+            color: #777;
+            line-height: 1.5;
+        }
+        @media (max-width: 700px) {
+            .cards-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+        /* Error cards grid */
+        .errors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .error-card {
+            position: relative;
+            background: rgba(192, 57, 43, 0.05);
+            border: 1px solid rgba(192, 57, 43, 0.15);
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s, z-index 0s;
+            z-index: 1;
+        }
+        .error-card:hover {
+            background: rgba(192, 57, 43, 0.1);
+            transform: scale(1.10);
+            box-shadow: 0 12px 35px rgba(192, 57, 43, 0.12);
+            z-index: 10;
+        }
+        .error-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .error-text {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.4;
+            flex: 1;
+        }
+        .error-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #c0392b;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 800;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(192, 57, 43, 0.3);
+        }
+        @media (max-width: 700px) {
+            .errors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Plan list with hint buttons */
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.15rem;
+            color: #444;
+            position: relative;
+        }
+        .plan-list li:last-child { border-bottom: none; }
+        .plan-list li span { flex: 1; }
+        .hint-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #c0392b;
+            background: transparent;
+            color: #c0392b;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .hint-btn:hover {
+            background: #c0392b;
+            color: #fff;
+        }
+        /* Popup */
+        .hint-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 700px;
+            width: 90%;
+            z-index: 1000;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.25s ease;
+        }
+        .hint-popup.active { display: block; }
+        .hint-popup blockquote {
+            margin: 0;
+            border-left: 4px solid #c0392b;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .hint-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .hint-close:hover { color: #333; }
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        /* Checklist style */
+        .checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.5;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 0.6rem;
+        }
+        .checklist li:hover {
+            background: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        .check {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .checklist.checklist-2col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            flex-direction: unset;
+        }
+        @media (max-width: 700px) {
+            .checklist.checklist-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Block tiles grid */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+        .tile {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .tile:hover {
+            background: #fafafa;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .tile-icon {
+            font-size: 2.2rem;
+        }
+        .tile-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        /* Centered link under content */
+        .slide-link-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: rgba(192, 57, 43, 0.06);
+            border: 1px solid rgba(192, 57, 43, 0.2);
+            border-radius: 10px;
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .slide-cta:hover {
+            background: rgba(192, 57, 43, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.1);
+        }
+        /* Split layout */
+        .split-layout {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .split-left,
+        .split-right {
+            flex: 1;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.8rem 1.5rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .split-left:hover,
+        .split-right:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+        .split-left {
+            border-top: 3px solid #c0392b;
+        }
+        .split-right {
+            border-top: 3px solid #27ae60;
+        }
+        .split-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .split-icon {
+            font-size: 1.6rem;
+        }
+        .split-header h3 {
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            margin: 0;
+        }
+        .split-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .split-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.6rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .split-list li:last-child {
+            border-bottom: none;
+        }
+        .list-marker {
+            flex-shrink: 0;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        @media (max-width: 700px) {
+            .split-layout {
+                flex-direction: column;
+            }
+        }
+        /* Resource tiles with links */
+        .tile-resource {
+            align-items: center;
+            gap: 1rem;
+        }
+        .tile-text-bold {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .tile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .tile-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: rgba(192, 57, 43, 0.05);
+            border: 1px solid rgba(192, 57, 43, 0.15);
+            border-radius: 8px;
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .tile-link:hover {
+            background: rgba(192, 57, 43, 0.1);
+            transform: translateX(4px);
+        }
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 0.6rem 2rem;
+            z-index: 10;
+        }
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .footer-section {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .footer-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .footer-divider {
+            color: rgba(0, 0, 0, 0.15);
+        }
+        .footer-link {
+            color: #777;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: #c0392b;
+        }
+        .footer-social {
+            color: #999;
+            transition: color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-social:hover {
+            color: #c0392b;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <a href="../index.html" class="back">← Назад к меню</a>
+
+        <div class="slide active" data-slide="1">
+            <h1>Вебинар: Как аналитику данных оценивать вакансии на рынке труда и делать отклики эффективно</h1>
+        </div>
+
+<div class="slide" data-slide="2">
+            <h2 style="color: #c0392b; font-size: 2rem; margin-bottom: 0.5rem;">План вебинара</h2>
+            <ul class="plan-list" style="list-style-type: none; padding-left: 0; width: 100%;">
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">1</span>
+                    <span style="line-height: 1.4; flex: 1;">Как выглядит рынок труда в 2026 году?</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">2</span>
+                    <span style="line-height: 1.4; flex: 1;">“Аналитик данных”: какие роли может иметь в виду работодатель?</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">3</span>
+                    <span style="line-height: 1.4; flex: 1;">План оценки вакансий</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">4</span>
+                    <span style="line-height: 1.4; flex: 1;">Соотнесение своих навыков и требований из вакансии</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">5</span>
+                    <span style="line-height: 1.4; flex: 1;">Чтение между строк</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">6</span>
+                    <span style="line-height: 1.4; flex: 1;">Поиск информации о вакансии</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: none;">
+                    <span style="color: #c0392b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">7</span>
+                    <span style="line-height: 1.4; flex: 1;">Вопросы для HR</span>
+                </li>
+            </ul>
+        </div>
+ <div class="slide" data-slide="3">
+    <h2 style="color: #c0392b; font-size: 2rem; margin-bottom: 1.5rem;">Обзор рынка</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; width: 100%;">
+        
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Аналитика не только для крупных компаний</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Аналитик — тот, кто предлагает инсайты</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Вакансий стало больше, ↑ числа претендентов</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Выросли требования к джунам</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Функционал меньше дробится</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Рынку интересна конкретная польза</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">ИИ упрощает рутину</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">География имеет значение</span>
+        </div>
+
+        <div style="background: #fff; border: 1px solid rgba(0, 0, 0, 0.08); border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 12px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="color: #c0392b; font-weight: bold; font-size: 1.3rem; line-height: 1;">✓</span>
+            <span style="font-size: 1.05rem; color: #333; line-height: 1.4;">Точечный найм и возвращение в офис</span>
+        </div>
+
+    </div>
+</div>
+
+<div class="slide" data-slide="4" id="slide-roles">
+            <h2 style="color: #c0392b; font-size: 2rem; margin-bottom: 1.5rem; width: 100%;">Кто может скрываться под термином "Аналитик данных"</h2>
+
+            <div class="table-wrapper" style="width: 100%; overflow-x: auto; background: #fff; border-radius: 8px; border: 1px solid #dcdde1; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 1rem; line-height: 1.5; border: 1px solid #dcdde1;">
+                    <thead>
+                        <tr style="background: #f1f2f6; color: #1a1a1a;">
+                            <th style="padding: 1.2rem 1rem; font-weight: 700; font-size: 1.05rem; text-align: center; border-right: 1px solid #dcdde1; border-bottom: 2px solid #dcdde1;">Критерий</th>
+                            <th style="padding: 1.2rem 1rem; font-weight: 700; font-size: 1.05rem; min-width: 180px; text-align: center; border-right: 1px solid #dcdde1; border-bottom: 2px solid #dcdde1;">Аналитик данных (DA)</th>
+                            <th style="padding: 1.2rem 1rem; font-weight: 700; font-size: 1.05rem; min-width: 180px; text-align: center; border-right: 1px solid #dcdde1; border-bottom: 2px solid #dcdde1;">Бизнес-аналитик (BA)</th>
+                            <th style="padding: 1.2rem 1rem; font-weight: 700; font-size: 1.05rem; min-width: 180px; text-align: center; border-right: 1px solid #dcdde1; border-bottom: 2px solid #dcdde1;">Продуктовый аналитик (PA)</th>
+                            <th style="padding: 1.2rem 1rem; font-weight: 700; font-size: 1.05rem; min-width: 220px; text-align: center; border-bottom: 2px solid #dcdde1;">Фуллстек-аналитик (FS)</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color: #2f3640;">
+                        <tr style="border-bottom: 1px solid #dcdde1;">
+                            <td style="padding: 1.2rem 1rem; font-weight: 700; color: #1a1a1a; background: #fafafa; vertical-align: top; border-right: 1px solid #dcdde1;">Цель</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">Отвечать на вопросы бизнеса с помощью данных.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">Понять потребности бизнеса и пользователей и перевести их в требования для решения.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">Помогать команде принимать решения по развитию продукта, опираясь на поведение пользователей и метрики.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top;">Обеспечить полный цикл работы с данными для принятия бизнес-решений: от их сбора «в сыром виде» до защиты готовой бизнес-гипотезы.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #dcdde1;">
+                            <td style="padding: 1.2rem 1rem; font-weight: 700; color: #1a1a1a; background: #fafafa; vertical-align: top; border-right: 1px solid #dcdde1;">Фокус</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">Цифры, метрики, данные.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">Процессы, ценность для бизнеса, требования.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">Пользовательский опыт внутри продукта.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top;">Инженерия, аналитика, BI-визуализация.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #dcdde1;">
+                            <td style="padding: 1.2rem 1rem; font-weight: 700; color: #1a1a1a; background: #fafafa; vertical-align: top; border-right: 1px solid #dcdde1;">Задачи</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">
+                                <ul style="padding-left: 1.1rem; margin: 0; line-height: 1.5; font-size: 0.95rem;">
+                                    <li style="margin-bottom: 0.4rem;">SQL, дашборды, отчёты, исследования;</li>
+                                    <li style="margin-bottom: 0.4rem;">Построение метрик и проверка гипотез;</li>
+                                    <li style="margin-bottom: 0;">Выявление проблем и инсайтов на основе данных.</li>
+                                </ul>
+                            </td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">
+                                <ul style="padding-left: 1.1rem; margin: 0; line-height: 1.5; font-size: 0.95rem;">
+                                    <li style="margin-bottom: 0.4rem;">Сбор и формализация требований;</li>
+                                    <li style="margin-bottom: 0.4rem;">Анализ и оптимизация процессов;</li>
+                                    <li style="margin-bottom: 0.4rem;">Коммуникация со стейкхолдерами;</li>
+                                    <li style="margin-bottom: 0;">Постановка задач разработчикам, контроль реализации.</li>
+                                </ul>
+                            </td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; border-right: 1px solid #dcdde1;">
+                                <ul style="padding-left: 1.1rem; margin: 0; line-height: 1.5; font-size: 0.95rem;">
+                                    <li style="margin-bottom: 0.4rem;">Юнит-экономика;</li>
+                                    <li style="margin-bottom: 0.4rem;">Анализ воронки;</li>
+                                    <li style="margin-bottom: 0.4rem;">Проверка гипотез и A/B-тесты;</li>
+                                    <li style="margin-bottom: 0.4rem;">Сегментация пользователей;</li>
+                                    <li style="margin-bottom: 0;">Построение Retention-матриц.</li>
+                                </ul>
+                            </td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top;">
+                                <ul style="padding-left: 1.1rem; margin: 0; line-height: 1.5; font-size: 0.95rem;">
+                                    <li style="margin-bottom: 0.4rem;">Автоматизация пайплайнов, чистка сырых логов, проектирование витрин данных;</li>
+                                    <li style="margin-bottom: 0.4rem;">Расчет продуктовых метрик, проведение A/B-тестов, поиск аномалий в цифрах;</li>
+                                    <li style="margin-bottom: 0;">Сборка интерактивных дашбордов, защита бизнес-инсайтов, оцифровка пути пользователя.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 1.2rem 1rem; font-weight: 700; color: #1a1a1a; background: #fafafa; vertical-align: top; border-right: 1px solid #dcdde1;">Итог</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; font-style: italic; border-right: 1px solid #dcdde1;">Работает с данными.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; font-style: italic; border-right: 1px solid #dcdde1;">"Переводчик" между бизнесом и IT.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; font-style: italic; border-right: 1px solid #dcdde1;">Не просто выгружает цифры, а переводит их в конкретные продуктовые решения.</td>
+                            <td style="padding: 1.2rem 1rem; vertical-align: top; font-style: italic;">Универсальный “переводчик”: свободно говорит как на языке бизнеса, так и на языке IT. Пропускает хаос сырых данных сквозь свою аналитическую систему и выдает качественное решение.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+            <div class="slide" data-slide="5">
+            <h2>План изучения вакансии</h2>
+            <div class="tiles-grid">
+                <div class="tile">
+                    <span class="tile-icon">🏢</span>
+                    <span class="tile-text">Что это за компания?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">💼</span>
+                    <span class="tile-text">Что это за вакансия - кто такой аналитик данных в данном случае</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🔍</span>
+                    <span class="tile-text">Что нужно будет делать на этой должности?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🗺️</span>
+                    <span class="tile-text">Что будут хотеть от кандидата и как будет выглядеть процесс трудоустройства</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">💪</span>
+                    <span class="tile-text">Почему мне понравилась вакансия и почему я подхожу на эту должность?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🚧</span>
+                    <span class="tile-text">Почему могу не подойти и какие могут возникнуть проблемы?</span>
+                </div>
+            </div>
+        </div>
+    <div class="slide" data-slide="6">
+            <h2>Что написано в вакансии vs Что хотел сказать автор</h2>
+            <ul class="plan-list">
+                <li>
+                    <span>«Умение работать в условиях неопределенности»</span>
+                    <button class="hint-btn" data-hint="hint-cover-1">?</button>
+                    <div class="hint-popup" id="hint-cover-1">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>"Процессов нет, ТЗ не будет, приоритеты меняются три раза в день. Полный хаос в задачах".</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>«Оптимизация существующих запросов»</span>
+                    <button class="hint-btn" data-hint="hint-cover-2">?</button>
+                    <div class="hint-popup" id="hint-cover-2">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>"В наследство достанутся легаси-код и монструозные запросы на 1000 строк".</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>«Самостоятельный поиск точек роста бизнеса» </span>
+                    <button class="hint-btn" data-hint="hint-cover-3">?</button>
+                    <div class="hint-popup" id="hint-cover-3">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>"Нанимающий менеджер сам не знает, зачем ему аналитик. Он будет ждать готовых бизнес-решений с первого дня".</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>«Развитие аналитической культуры в компании» </span>
+                    <button class="hint-btn" data-hint="hint-cover-4">?</button>
+                    <div class="hint-popup" id="hint-cover-4">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>"Никто в компании, кроме вас, не понимает метрики. Придется бесконечно объяснять менеджерам, почему нельзя верить графикам с некорректными осями".</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>«Широкий кругозор, готовность подключаться к смежным задачам» </span>
+                    <button class="hint-btn" data-hint="hint-cover-5">?</button>
+                    <div class="hint-popup" id="hint-cover-5">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>"Классический «многорукий многоног». Будете и аналитиком, и дата-инженером, а иногда и тестировщиком или проджектом".</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>«Динамично развивающийся продукт / Стартап-атмосфера» </span>
+                    <button class="hint-btn" data-hint="hint-cover-6">?</button>
+                    <div class="hint-popup" id="hint-cover-6">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>"Придется много перерабатывать, процессы строятся на коленке, документации нет, всё нужно было сделать «вчера»". </blockquote>
+                    </div>
+                </li>
+            </ul>
+        </div>
+<div class="slide" data-slide="7">
+            <h2 style="color: #c0392b; font-size: 2rem; margin-bottom: 1.5rem; width: 100%;">Где искать информацию о компании</h2>
+            
+            <div class="cards-row" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%;">
+                
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 160px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);">
+                    <div class="card-icon" style="margin-bottom: 0.8rem; display: flex; align-items: center; justify-content: center;">
+                        <svg width="45" height="45" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="50" fill="#c0392b"/>
+                            <path d="M26 34V66H34V54H42V66H50V34H42V46H34V34H26Z" fill="white"/>
+                            <path d="M58 34V66H66V54H74V66H82V34H74V46H66V34H58Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <span class="card-title" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Работный сайт</span>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 160px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);">
+                    <span class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1;">🌐</span>
+                    <span class="card-title" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Сайт компании</span>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 160px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);">
+                    <span class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1;">🤖</span>
+                    <span class="card-title" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Поисковик и ИИ</span>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 160px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);">
+                    <span class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1;">📝</span>
+                    <span class="card-title" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Блог компании</span>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 160px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);">
+                    <span class="card-icon" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1;">💼</span>
+                    <span class="card-title" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Хабр Карьера и Dreamjob</span>
+                </div>
+
+                <div class="card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 160px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);">
+                    <span class="card-icon" style="margin-bottom: 0.8rem; color: #4a5568; display: flex; align-items: center; justify-content: center;">
+                        <svg width="45px" height="45px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                        </svg>
+                    </span>
+                    <span class="card-title" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Нетворкинг: LinkedIn и Телеграм</span>
+                </div>
+
+            </div>
+        </div>
+<div class="slide" data-slide="8">
+            <h2 style="color: #c0392b; font-size: 2rem; margin-bottom: 2rem; width: 100%;">На практике</h2>
+            
+            <div class="tiles-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; width: 100%; max-width: 900px;">
+                
+                <div class="tile" style="background: #fff; border-radius: 16px; padding: 2.5rem 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; min-height: 180px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);">
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                        <span class="tile-text-bold" style="font-size: 1.35rem; font-weight: 700; color: #1a1a1a; margin-bottom: 2rem; display: block;">Аналитик данных</span>
+                    </div>
+                    <a href="https://hh.ru/vacancy/133182992?from=share_ios" target="_blank" 
+                    style="display: block; width: 100%; padding: 0.9rem 0; background: #c0392b; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 1rem; transition: opacity 0.2s;">Ссылка на вакансию
+                    </a>
+                </div>
+
+                <div class="tile" style="background: #fff; border-radius: 16px; padding: 2.5rem 1.5rem 1.5rem 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; min-height: 180px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);">
+                    <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                        <span class="tile-text-bold" style="font-size: 1.35rem; font-weight: 700; color: #1a1a1a; margin-bottom: 2rem; display: block;">Бизнес-системный аналитик</span>
+                    </div>
+                    <a href="https://hh.ru/vacancy/132748849?hhtmFrom=favorite_vacancy_list" target="_blank" 
+                    style="display: block; width: 100%; padding: 0.9rem 0; background: #c0392b; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 1rem; transition: opacity 0.2s;">Ссылка на вакансию
+                    </a>
+                </div>
+
+            </div>
+        </div>
+<div class="slide" data-slide="9">
+            <h2 style="color: #c0392b; font-size: 2rem; margin-bottom: 2rem; width: 100%;">Что еще нужно узнать про вакансию</h2>
+            
+            <div class="errors-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; width: 100%;">
+                
+                <div class="error-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); min-height: 80px;">
+                    <span class="error-icon" style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">👀</span>
+                    <span class="error-text" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Почему вообще открыта вакансия?</span>
+                </div>
+                
+                <div class="error-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); min-height: 80px;">
+                    <span class="error-icon" style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">👥</span>
+                    <span class="error-text" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Из кого состоит команда?</span>
+                </div>
+                
+                <div class="error-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); min-height: 80px;">
+                    <span class="error-icon" style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">💎</span>
+                    <span class="error-text" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Будут ли у специалиста уникальные задачи?</span>
+                </div>
+                
+                <div class="error-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); min-height: 80px;">
+                    <span class="error-icon" style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">💶</span>
+                    <span class="error-text" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Сколько будут платить?</span>
+                </div>
+                
+                <div class="error-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); min-height: 80px;">
+                    <span class="error-icon" style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">🏃🏻</span>
+                    <span class="error-text" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Как будет строиться “вход” в должность?</span>
+                </div>
+                
+                <div class="error-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.2rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); min-height: 80px;">
+                    <span class="error-icon" style="font-size: 1.8rem; line-height: 1; flex-shrink: 0;">🚀</span>
+                    <span class="error-text" style="font-weight: 600; color: #2c3e50; font-size: 1.05rem; line-height: 1.3;">Как подготовиться к следующему этапу?</span>
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="slide" data-slide="11">
+            <h1>Выводы и вопросы💡</h1>
+        </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()" id="prevBtn" disabled>← Назад</button>
+        <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+        <button onclick="nextSlide()" id="nextBtn">Далее →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        const overlay = document.getElementById('overlay');
+
+        document.querySelectorAll('.hint-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const popup = document.getElementById(btn.dataset.hint);
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                popup.classList.add('active');
+                overlay.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.hint-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                overlay.classList.remove('active');
+            });
+        });
+
+        overlay.addEventListener('click', () => {
+            document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        showSlide(0);
+    </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <span class="footer-label">Рожкова Наталья | HR</span>
+                <span class="footer-divider">·</span>
+                <a href="mailto:narozhkova53@gmail.com" class="footer-link">📧 narozhkova53@gmail.com</a>
+                <span class="footer-divider">·</span>
+                <a href="https://t.me/narozhkova" target="_blank" class="footer-link">
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-telegram">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
