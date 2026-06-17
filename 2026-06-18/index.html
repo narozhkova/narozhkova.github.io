@@ -6,7 +6,6 @@
     <link class="icon" type="image/ico" href="../ico/favicon.ico" />
     <title>Вебинар: Прожарка резюме</title>
     <style>
-        /* --- 1. ОСНОВНЫЕ НАСТРОЙКИ --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         html, body {
@@ -25,7 +24,6 @@
             position: relative;
         }
 
-        /* --- 2. ДЕКОРАТИВНЫЕ ЗОЛОТИСТЫЕ ВОЛНЫ --- */
         .background-waves {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -50,7 +48,6 @@
             border-radius: 50%;
         }
         
-        /* --- 3. ФИКСИРОВАННЫЕ ЭЛЕМЕНТЫ ШАПКИ --- */
         .logo-container {
             position: fixed;
             top: 2rem; left: 2.5rem;
@@ -75,7 +72,6 @@
         }
         .back:hover { color: #333; }
         
-        /* --- 4. КОНТЕЙНЕР ДЛЯ СЛАЙДОВ --- */
         .slides-container {
             flex: 1;
             display: flex;
@@ -101,7 +97,6 @@
         .slide h2 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #0b0f19; font-weight: 700; }
         .slide p { font-size: 1.2rem; color: #555; line-height: 1.7; }
 
-        /* --- 5. ПРОЗРАЧНЫЙ ФУТЕР --- */
         .footer {
             position: fixed;
             bottom: 0;
@@ -126,12 +121,12 @@
         }
         .nav-btn {
             padding: 0.55rem 1.6rem; font-size: 0.95rem; border: none; border-radius: 8px;
-            cursor: pointer; background: #be3b2e; color: #fff; font-weight: 600;
+            cursor: pointer; background: #ff9900; color: #fff; font-weight: 600;
             transition: opacity 0.2s, background-color 0.2s;
             box-shadow: 0 2px 8px rgba(190, 59, 46, 0.2);
         }
-        .nav-btn:hover:not(:disabled) { background: #a53227; }
-        .nav-btn:disabled { background: #e1b3ad; color: #ffffff; cursor: not-allowed; opacity: 1; box-shadow: none; }
+        .nav-btn:hover:not(:disabled) { background: #faae3b; }
+        .nav-btn:disabled { background: #ffcc7f; color: #ffffff; cursor: not-allowed; opacity: 1; box-shadow: none; }
         .counter { font-size: 1.05rem; min-width: 60px; text-align: center; color: #444; font-weight: 600; }
 
         .footer-bottom-row {
@@ -162,7 +157,6 @@
         }
         .footer-link:hover { color: #be3b2e; }
 
-        /* --- 6. ВНУТРЕННИЕ КОМПОНЕНТЫ --- */
         .profile-layout { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 4rem; }
         .profile-photo-container { flex: 0 0 350px; }
         .profile-photo { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
@@ -182,220 +176,204 @@
         .split-left, .split-right { flex: 1; background: #fff; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 14px; padding: 1.8rem 1.5rem; }
         .split-left { border-top: 3px solid #be3b2e; }
         .split-right { border-top: 3px solid #27ae60; }
-        /* Список на слайде */
-.plan-list {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-}
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
 
-.plan-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* Увеличиваем отступы и размер шрифта, чтобы соответствовать старым слайдам */
-    padding: 1.5rem 0; 
-    border-bottom: 2px solid rgba(0, 0, 0, 0.08); /* Тонкая линия как в оригинале */
-    font-size: 1.2rem; /* Размер как у обычного текста p на ваших слайдах */
-    color: #444;
-}
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0; 
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.2rem;
+            color: #444;
+        }
 
-/* Стили для заголовка h1 внутри слайда */
-.slide h1 {
-    font-size: 3.2rem; 
-    font-weight: 800; /* Максимально жирный как на скриншоте */
-    color: #1a1a1a;
-    letter-spacing: -0.02em; /* Чуть плотнее, как в проф. верстке */
-}
-.hint-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: 2px solid #c0392b;
-    background: none;
-    color: #c0392b;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.hint-btn:hover {
-    background: #c0392b;
-    color: white;
-}
+        .slide h1 {
+            font-size: 3.2rem; 
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.02em;
+        }
+        .hint-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #c0392b;
+            background: none;
+            color: #c0392b;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .hint-btn:hover {
+            background: #c0392b;
+            color: white;
+        }
 
-/* Затемнение фона */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-}
+        /* Затемнение фона */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
 
-/* --- СТИЛИ ДЛЯ СЛАЙДА "О СЕБЕ" --- */
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
 
-/* Контейнер списка, чтобы он не разъезжался */
-.plan-list {
-    list-style: none;
-    padding: 0;
-    width: 100%;
-    margin-top: 2rem;
-}
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
 
-.plan-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
+        .plan-item-text {
+            color: #666;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
 
-/* Название пункта (серый, полужирный как на ваших образцах) */
-.plan-item-text {
-    color: #666;
-    font-weight: 600;
-    font-size: 1.2rem;
-}
+        .hint-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #ff9900; /* Оранжевый контур */
+            background: transparent;
+            color: #ff9900; /* Оранжевый знак */
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
 
-/* Кнопка "?" — ОРАНЖЕВАЯ */
-.hint-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 2px solid #ff9900; /* Оранжевый контур */
-    background: transparent;
-    color: #ff9900; /* Оранжевый знак */
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
+        .hint-btn:hover {
+            background-color: #ff9900;
+            color: #ffffff;
+        }
 
-/* Эффект при наведении — кружок закрашивается оранжевым */
-.hint-btn:hover {
-    background-color: #ff9900;
-    color: #ffffff;
-}
+        .hint-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 600px;
+            z-index: 10000;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
 
-/* Всплывающее окно */
-.hint-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 16px;
-    padding: 2.5rem;
-    width: 600px;
-    z-index: 10000;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
+        .hint-popup.active {
+            display: block;
+        }
 
-.hint-popup.active {
-    display: block;
-}
+        .hint-popup blockquote {
+            margin: 0;
+            border-left: 6px solid #ff9900;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
 
-/* Цитата с ОРАНЖЕВОЙ полоской */
-.hint-popup blockquote {
-    margin: 0;
-    border-left: 6px solid #ff9900; /* Оранжевая полоса слева */
-    padding: 0.5rem 0 0.5rem 1.5rem;
-    font-style: italic;
-    color: #444;
-    line-height: 1.7;
-    font-size: 1.1rem;
-}
+        .hint-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .hint-close:hover { color: #888; }
 
-/* Кнопка закрытия (крестик) */
-.hint-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: none;
-    border: none;
-    color: #ccc;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-.hint-close:hover { color: #888; }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+        }
+        .overlay.active { display: block; }
+        .slide.orange-break-slide {
+            background-color: #f39200 !important;
+            padding: 0 !important;
+            position: relative;
+            overflow: hidden;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            align-self: stretch;
+        }
 
-/* Затемнение фона */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 9999;
-    backdrop-filter: blur(3px);
-}
-.overlay.active { display: block; }
-/* Специфические стили для оранжевого слайда (Перерыв) */
-.slide.orange-break-slide {
-    background-color: #f39200 !important; /* Насыщенный оранжевый */
-    padding: 0 !important; /* Убираем все отступы слайда */
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Логотип сверху, текст снизу */
-    align-items: flex-start;
-}
+        .orange-break-slide .text-container {
+            padding: 0 0 80px 80px;
+            z-index: 10;
+        }
 
-/* Контейнер для текста, чтобы он был слева и снизу */
-.orange-break-slide .text-container {
-    padding: 0 0 80px 80px; /* Отступы текста от краев */
-    z-index: 10;
-}
+        .orange-break-slide h1 {
+            color: #080808 !important;
+            font-size: 70px !important;
+            font-weight: 800;
+            line-height: 1.1;
+            text-align: left !important;
+            margin: 0;
+        }
 
-.orange-break-slide h1 {
-    color: #080808 !important;
-    font-size: 70px !important;
-    font-weight: 800;
-    line-height: 1.1;
-    text-align: left !important;
-    margin: 0;
-}
+        /* Логотип внутри слайда (белый бокс + белый текст) */
+        .orange-break-slide .inner-logo {
+            display: flex;
+            align-items: center;
+            padding: 60px 0 0 80px;
+            z-index: 10;
+        }
 
-/* Логотип внутри слайда (белый бокс + белый текст) */
-.orange-break-slide .inner-logo {
-    display: flex;
-    align-items: center;
-    padding: 60px 0 0 80px;
-    z-index: 10;
-}
+        .orange-break-slide .logo-box-white {
+            background: #ffffff;
+            color: #f39200;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            border-radius: 4px;
+        }
 
-.orange-break-slide .logo-box-white {
-    background: #ffffff;
-    color: #f39200;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: 700;
-    border-radius: 4px;
-}
+        .orange-break-slide .logo-text-white {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 400;
+            margin-left: 10px;
+        }
 
-.orange-break-slide .logo-text-white {
-    color: #ffffff;
-    font-size: 32px;
-    font-weight: 400;
-    margin-left: 10px;
-}
-
-/* Декоративные волны (SVG) */
-.orange-break-slide .waves-decor {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 1;
-}
+        /* Декоративные волны (SVG) */
+        .orange-break-slide .waves-decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -404,7 +382,7 @@
     
     <div class="logo-container">
         <div class="logo-box">С</div>
-        <div class="logo-text">имулейтив</div>
+        <div class="logo-text">Cимулейтив</div>
     </div>
 
         <div class="slides-container" id="slidesContainer">
@@ -752,79 +730,73 @@
             </ul>
             </div>
 
-            <div class="slide" data-slide="10">
-                <div class="orange-break-slide">
-                    <svg class="waves-decor" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g opacity="0.4" stroke="white" stroke-width="1">
-                            <path d="M1280 400C1100 350 900 200 850 0" />
-                            <path d="M1280 430C1080 380 880 230 830 0" />
-                            <path d="M1280 460C1060 410 860 260 810 0" />
-                            <path d="M1280 490C1040 440 840 290 790 0" />
-                            <path d="M1280 520C1020 470 820 320 770 0" />
-                            <path d="M1280 550C1000 500 800 350 750 0" />
-                        </g>
-                        <g opacity="0.4" stroke="white" stroke-width="1">
-                            <path d="M0 300C150 350 350 500 400 720" />
-                            <path d="M0 330C170 380 370 530 420 720" />
-                            <path d="M0 360C190 410 390 560 440 720" />
-                            <path d="M0 390C210 440 410 590 460 720" />
-                            <path d="M0 420C230 470 430 620 480 720" />
-                        </g>
-                    </svg>
+            <div class="slide orange-break-slide" data-slide="10">
+                <svg class="waves-decor" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.4" stroke="white" stroke-width="1">
+                        <path d="M1280 400C1100 350 900 200 850 0" />
+                        <path d="M1280 430C1080 380 880 230 830 0" />
+                        <path d="M1280 460C1060 410 860 260 810 0" />
+                        <path d="M1280 490C1040 440 840 290 790 0" />
+                        <path d="M1280 520C1020 470 820 320 770 0" />
+                        <path d="M1280 550C1000 500 800 350 750 0" />
+                    </g>
+                    <g opacity="0.4" stroke="white" stroke-width="1">
+                        <path d="M0 300C150 350 350 500 400 720" />
+                        <path d="M0 330C170 380 370 530 420 720" />
+                        <path d="M0 360C190 410 390 560 440 720" />
+                        <path d="M0 390C210 440 410 590 460 720" />
+                        <path d="M0 420C230 470 430 620 480 720" />
+                    </g>
+                </svg>
+                <img src="../images/student.png" alt="Pointing Illustration" style="position: absolute; right: 5%; bottom: 0; max-height: 52vh; width: auto; object-fit: contain; z-index: 2; pointer-events: none;">
+                <div class="text-container">
+                    <h1>Перерыв на<br>вопросы</h1>
                 </div>
-                    <div style="display: flex; width: 100%; align-items: center; justify-content: flex-start; gap: 30px;">
-                    <div style="flex: 0 0 420px; display: flex; align-items: flex-end;">
-                        <img src="../images/student.png" alt="Pointing Illustration" style="width: 100%; height: auto; object-fit: contain;">
-                </div>
-                </div>
-                    <div class="text-container">
-                        <h1>Перерыв на<br>вопросы</h1>
+            </div>
+            <div class="slide" data-slide="11">
+                <h1 style="font-size: 56px; font-weight: 800; color: #1a1a1a; text-align: center; margin-bottom: 50px;">Прожарка 🥩 🔥</h1>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
+                    
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Анастасия</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1CKVG-j3l4dhu4pTnQggXCXdXFcZba1qQ/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                        </div>
                     </div>
-            </div>
-        </div>
- <div class="slide" data-slide="11">
-    <h1 style="font-size: 56px; font-weight: 800; color: #1a1a1a; text-align: center; margin-bottom: 50px;">Прожарка 🥩 🔥</h1>
-    
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
-        
-        <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
-            <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Анастасия</span>
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                <a href="https://drive.google.com/file/d/1CKVG-j3l4dhu4pTnQggXCXdXFcZba1qQ/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #e65100; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
-            </div>
-        </div>
 
-        <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
-            <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Никита</span>
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                <a href="https://drive.google.com/file/d/1AgM6mFKhlBpwcWbiWPviuNsuM4WGABSM/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #e65100; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Никита</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1AgM6mFKhlBpwcWbiWPviuNsuM4WGABSM/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Анастасия</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1NjJsBUlpWa8ZhlgQkEZ-0UQRGJ183u9v/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                            <a href="https://drive.google.com/file/d/1l2dpkRF7JC2N1eVM2OXdpbBwzSaH7Fcs/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Сопроводительное письмо</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Артем</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/19uuxUiQ9iwriSVzbzO96mmDfHSlLvm6C/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Ирина</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1ihS5mRZfZEB07Y4TuS4DDvEPcoYYZy3b/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Сопроводительное письмо</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-
-        <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
-            <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Анастасия</span>
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                <a href="https://drive.google.com/file/d/1NjJsBUlpWa8ZhlgQkEZ-0UQRGJ183u9v/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #e65100; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
-                <a href="https://drive.google.com/file/d/1l2dpkRF7JC2N1eVM2OXdpbBwzSaH7Fcs/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #e65100; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Сопроводительное письмо</a>
-            </div>
-        </div>
-
-        <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
-            <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Артем</span>
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                <a href="https://drive.google.com/file/d/19uuxUiQ9iwriSVzbzO96mmDfHSlLvm6C/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #e65100; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
-            </div>
-        </div>
-
-        <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
-            <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Ирина</span>
-            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                <a href="https://drive.google.com/file/d/1ihS5mRZfZEB07Y4TuS4DDvEPcoYYZy3b/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #e65100; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Сопроводительное письмо</a>
-            </div>
-        </div>
-
-    </div>
-</div>
     <footer class="footer">
         <div class="footer-controls">
             <button class="nav-btn" id="prevBtn">← Назад</button>
@@ -872,9 +844,13 @@
 
         document.getElementById('totalSlides').textContent = totalSlides;
         showSlide(0);
-        function openHint(id) {
-            document.getElementById('hint-overlay').classList.add('active');
-            document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.hint-popup').forEach(popup => {
+            document.body.appendChild(popup);
+        });
+
+        function closeAllHints() {
+            document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+            document.getElementById('overlay').classList.remove('active');
         }
 
         document.querySelectorAll('.hint-btn').forEach(btn => {
@@ -883,17 +859,15 @@
                 const popup = document.getElementById(btn.dataset.hint);
                 document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
                 popup.classList.add('active');
-                overlay.classList.add('active');
+                document.getElementById('overlay').classList.add('active');
             });
         });
 
         document.querySelectorAll('.hint-close').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
-                overlay.classList.remove('active');
-            });
+            btn.addEventListener('click', closeAllHints);
         });
+
+        document.getElementById('overlay').addEventListener('click', closeAllHints);
     </script>
-    <div class="overlay" id="hint-overlay" onclick="closeAllHints()"></div>
 </body>
 </html>
