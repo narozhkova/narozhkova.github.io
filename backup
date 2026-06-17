@@ -1,0 +1,48 @@
+            <div class="slide" data-slide="9">
+                <h1 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; text-align: left;">План «О себе»</h1>
+                
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 25px; font-weight: 600;">Структура идеального summary для резюме</p>
+
+                <ul class="plan-list" style="width: 100%; list-style: none; padding: 0;">
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <span style="color: #666; font-weight: 600; font-size: 1.2rem;">Нынешняя должность + опыт</span>
+                        <button class="hint-btn" onclick="openHint('hint-1')">?</button>
+                        <div class="hint-popup" id="hint-1">
+                            <button class="hint-close" onclick="closeAllHints()">&times;</button>
+                            <blockquote class="hint-quote">Начинающий аналитик данных с пятилетним бэкграундом в сфере логистики. Прошел интенсивную аналитическую переподготовку на курсах Ромашка-аналитик (900+ часов практики), сфокусированную на статистическом анализе и поиске закономерностей в больших массивах данных.</blockquote>
+                        </div>
+                    </li>
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <span style="color: #666; font-weight: 600; font-size: 1.2rem;">Ключевые достижения</span>
+                        <button class="hint-btn" onclick="openHint('hint-2')">?</button>
+                        <div class="hint-popup" id="hint-2">
+                            <button class="hint-close" onclick="closeAllHints()">&times;</button>
+                            <blockquote class="hint-quote">В рамках дипломного проекта провел A/B тест для гипотетического маркетплейса: выявил статистически значимое различие в конверсии, что потенциально увеличило бы выручку на 8%. На текущем месте работы автоматизировал отчеты в Excel через Power Query, сократив время их подготовки с 3 часов до 10 минут.</blockquote>
+                        </div>
+                    </li>
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <span style="color: #666; font-weight: 600; font-size: 1.2rem;">Hard Skills</span>
+                        <button class="hint-btn" onclick="openHint('hint-3')">?</button>
+                        <div class="hint-popup" id="hint-3">
+                            <button class="hint-close" onclick="closeAllHints()">&times;</button>
+                            <blockquote class="hint-quote">Стек: SQL (сложные запросы, JOINs, оконные функции), Python (Pandas, NumPy, Matplotlib/Seaborn), визуализация данных в Tableau и Power BI, базовое владение статистическими критериями (T-test, Mann-Whitney).</blockquote>
+                        </div>
+                    </li>
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid rgba(0,0,0,0.1);">
+                        <span style="color: #666; font-weight: 600; font-size: 1.2rem;">Soft Skills</span>
+                        <button class="hint-btn" onclick="openHint('hint-4')">?</button>
+                        <div class="hint-popup" id="hint-4">
+                            <button class="hint-close" onclick="closeAllHints()">&times;</button>
+                            <blockquote class="hint-quote">Благодаря опыту в логистике умею переводить запросы бизнеса на технический язык. Обладаю навыком презентации сложных выводов простыми словами, что подтверждено успешной защитой трех аналитических кейсов перед экспертами индустрии.</blockquote>
+                        </div>
+                    </li>
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: none;">
+                        <span style="color: #666; font-weight: 600; font-size: 1.2rem;">Что ищем + контакты</span>
+                        <button class="hint-btn" onclick="openHint('hint-5')">?</button>
+                        <div class="hint-popup" id="hint-5">
+                            <button class="hint-close" onclick="closeAllHints()">&times;</button>
+                            <blockquote class="hint-quote">Ищу позицию Junior Data Analyst в продуктовой или ритейл компании, где смогу применять навыки SQL и Python для оптимизации внутренних процессов и работы с реальными продуктовыми метриками.<br><br><strong>Иван Иванов:</strong> +7-9XX-XXX-XX-XX, Telegram, Портфолио.</blockquote>
+                        </div>
+                    </li>
+                </ul>
+            </div>
