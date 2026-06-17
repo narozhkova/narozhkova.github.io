@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link class="icon" type="image/ico" href="../ico/favicon.ico" />
+    <title>Вебинар: Прожарка резюме</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f7;
+            color: #2d2d2d;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .background-waves {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .background-waves::before {
+            content: '';
+            position: absolute;
+            bottom: -20%; right: -10%;
+            width: 70vw; height: 70vw;
+            background: radial-gradient(circle, rgba(255, 153, 0, 0.12) 0%, rgba(255, 107, 53, 0.04) 50%, rgba(245, 245, 247, 0) 70%);
+            border-radius: 50%;
+        }
+        .background-waves::after {
+            content: '';
+            position: absolute;
+            bottom: -35%; right: 10%;
+            width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(255, 153, 0, 0.08) 0%, rgba(245, 245, 247, 0) 60%);
+            border-radius: 50%;
+        }
+        
+        .logo-container {
+            position: fixed;
+            top: 2rem; left: 2.5rem;
+            display: flex; align-items: center;
+            font-size: 1.8rem; color: #1a1a1a;
+            user-select: none;
+            z-index: 100;
+        }
+        .logo-box {
+            background: #ff9900; color: #1a1a1a;
+            width: 2.2rem; height: 2.2rem;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 500; border-radius: 2px;
+        }
+        .logo-text { font-weight: 400; margin-left: 0.1rem; }
+
+        .back {
+            position: fixed;
+            top: 4.8rem; left: 2.5rem;
+            color: #888; text-decoration: none; font-size: 0.85rem;
+            transition: color 0.2s; z-index: 100;
+        }
+        .back:hover { color: #333; }
+        
+        .slides-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 7rem 0 11rem 0; 
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+            width: 85%; 
+            max-width: 1050px;
+            padding-bottom: 2rem;
+        }
+        .slide.active { display: flex; }
+        .slide h1 { font-size: 3.2rem; text-align: center; width: 100%; color: #1a1a1a; font-weight: 800; }
+        .slide h2 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #0b0f19; font-weight: 700; }
+        .slide p { font-size: 1.2rem; color: #555; line-height: 1.7; }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background: transparent; 
+            padding: 0 2.5rem;
+            z-index: 9999;
+            pointer-events: none; 
+        }
+
+        .footer-controls {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            pointer-events: auto; 
+        }
+        .nav-btn {
+            padding: 0.55rem 1.6rem; font-size: 0.95rem; border: none; border-radius: 8px;
+            cursor: pointer; background: #ff9900; color: #fff; font-weight: 600;
+            transition: opacity 0.2s, background-color 0.2s;
+            box-shadow: 0 2px 8px rgba(190, 59, 46, 0.2);
+        }
+        .nav-btn:hover:not(:disabled) { background: #faae3b; }
+        .nav-btn:disabled { background: #ffcc7f; color: #ffffff; cursor: not-allowed; opacity: 1; box-shadow: none; }
+        .counter { font-size: 1.05rem; min-width: 60px; text-align: center; color: #444; font-weight: 600; }
+
+        .footer-bottom-row {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%); 
+            display: flex;
+            justify-content: center;
+            pointer-events: auto;
+        }
+        .footer-section {
+            display: flex; 
+            align-items: center; 
+            gap: 0.9rem; 
+            font-size: 0.9rem; 
+            color: #555;
+            background: rgba(255, 255, 255, 0.6); 
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(4px); 
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        .footer-link {
+            text-decoration: none; color: #555; font-weight: 500;
+            display: flex; align-items: center; gap: 0.3rem;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: #be3b2e; }
+
+        .profile-layout { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 4rem; }
+        .profile-photo-container { flex: 0 0 350px; }
+        .profile-photo { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+        .connection-layout { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 3rem; }
+        .connection-card { background: #ededf0; border-radius: 24px; padding: 4rem 3.5rem; max-width: 580px; display: flex; flex-direction: column; gap: 2rem; }
+        .connection-media { flex: 1; display: flex; justify-content: center; align-items: center; }
+        .megaphone-icon { font-size: 11rem; transform: rotate(-10deg); animation: pulse 3s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { transform: rotate(-10deg) scale(1); } 50% { transform: rotate(-6deg) scale(1.04); } }
+
+        .checklist { list-style: none; padding: 0; width: 100%; display: flex; flex-direction: column; gap: 0.6rem; }
+        .checklist .check-item { display: flex; align-items: flex-start; gap: 0.8rem; padding: 1rem 1.2rem; background: #fff; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 12px; font-size: 1.1rem; }
+        .check { color: #27ae60; font-weight: bold; font-size: 1.3rem; }
+        .checklist.checklist-2col { display: grid !important; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        
+        .split-layout { display: flex; gap: 1.5rem; width: 100%; }
+        .split-left, .split-right { flex: 1; background: #fff; border: 1px solid rgba(0, 0, 0, 0.06); border-radius: 14px; padding: 1.8rem 1.5rem; }
+        .split-left { border-top: 3px solid #be3b2e; }
+        .split-right { border-top: 3px solid #27ae60; }
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0; 
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.2rem;
+            color: #444;
+        }
+
+        .slide h1 {
+            font-size: 3.2rem; 
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.02em;
+        }
+        .hint-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #c0392b;
+            background: none;
+            color: #c0392b;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .hint-btn:hover {
+            background: #c0392b;
+            color: white;
+        }
+
+        /* Затемнение фона */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-item-text {
+            color: #666;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .hint-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #ff9900; /* Оранжевый контур */
+            background: transparent;
+            color: #ff9900; /* Оранжевый знак */
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .hint-btn:hover {
+            background-color: #ff9900;
+            color: #ffffff;
+        }
+
+        .hint-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 600px;
+            z-index: 10000;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .hint-popup.active {
+            display: block;
+        }
+
+        .hint-popup blockquote {
+            margin: 0;
+            border-left: 6px solid #ff9900;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .hint-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .hint-close:hover { color: #888; }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 9999;
+        }
+        .overlay.active { display: block; }
+        .slide.orange-break-slide {
+            background-color: #f39200 !important;
+            padding: 0 !important;
+            position: relative;
+            overflow: hidden;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            align-self: stretch;
+        }
+
+        .orange-break-slide .text-container {
+            padding: 0 0 80px 80px;
+            z-index: 10;
+        }
+
+        .orange-break-slide h1 {
+            color: #080808 !important;
+            font-size: 70px !important;
+            font-weight: 800;
+            line-height: 1.1;
+            text-align: left !important;
+            margin: 0;
+        }
+
+        /* Логотип внутри слайда (белый бокс + белый текст) */
+        .orange-break-slide .inner-logo {
+            display: flex;
+            align-items: center;
+            padding: 60px 0 0 80px;
+            z-index: 10;
+        }
+
+        .orange-break-slide .logo-box-white {
+            background: #ffffff;
+            color: #f39200;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        .orange-break-slide .logo-text-white {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 400;
+            margin-left: 10px;
+        }
+
+        /* Декоративные волны (SVG) */
+        .orange-break-slide .waves-decor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-waves"></div>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="logo-container">
+        <div class="logo-box">С</div>
+        <div class="logo-text">Cимулейтив</div>
+    </div>
+
+        <div class="slides-container" id="slidesContainer">
+            <div class="slide">
+                    <h1>Вебинар: Прожарка резюме 🔥</h1>
+            </div>
+            <div class="slide">
+                <div class="connection-layout">
+                    <div class="connection-card">
+                        <h2>Проверка связи</h2>
+                        <p>Поставьте + в чат, если вам хорошо слышно и видно</p>
+                    </div>
+                    <div class="connection-media">
+                        <span class="megaphone-icon">📢</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div class="profile-layout">
+                    <div class="profile-text-content">
+                        <h2 style="font-size: 3.5rem; margin-bottom: 0.2rem;">Рожкова Наталья</h2>
+                        <p style="font-size: 1.8rem; color: #0e0d0d; font-weight: 600; margin-bottom: 2.5rem;">Карьерный консультант</p>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+                                <span style="color: #ff9900; margin-right: 15px; font-size: 1.2rem;">●</span>
+                                В HR и рекрутменте с 2021 года,
+                            </li>
+                            <li style="font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+                                <span style="color: #ff9900; margin-right: 15px; font-size: 1.2rem;">●</span>
+                                HRTech, ex-Ancor IT recruitment.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="profile-photo-container">
+        <img src="../images/profile.photo.jpg" alt="Рожкова Наталья" class="profile-photo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" id="slide4">
+                <div style="display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 40px; background: transparent;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                        <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #1a1a1a;">План вебинара</h2>
+                        <div style="background: rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255, 153, 0, 0.3);">
+                            <div style="width: 25px; height: 25px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ff9900; font-weight: bold;">✓</div>
+                            <span style="font-size: 1.2rem; font-weight: 600;">На что обращает внимание рекрутер?</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255, 153, 0, 0.3);">
+                            <div style="width: 25px; height: 25px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ff9900; font-weight: bold;">✓</div>
+                            <span style="font-size: 1.2rem; font-weight: 600;">Какие материалы нужно создать?</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255, 153, 0, 0.3);">
+                            <div style="width: 25px; height: 25px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ff9900; font-weight: bold;">✓</div>
+                            <span style="font-size: 1.2rem; font-weight: 600;">Первичный скрининг резюме</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255, 153, 0, 0.3);">
+                            <div style="width: 25px; height: 25px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ff9900; font-weight: bold;">✓</div>
+                            <span style="font-size: 1.2rem; font-weight: 600;">Общие ошибки резюме</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.5); border-radius: 50px; padding: 15px 25px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255, 153, 0, 0.3);">
+                            <div style="width: 25px; height: 25px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ff9900; font-weight: bold;">✓</div>
+                            <span style="font-size: 1.2rem; font-weight: 600;">Прожарка</span>
+                        </div>
+                    </div>
+
+                    <div style="flex: 0 0 300px; display: flex; justify-content: center;">
+                        <svg width="220" height="220" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="40" y="80" width="30" height="120" rx="5" fill="#ff9900"/>
+                            <rect x="85" y="40" width="30" height="160" rx="5" fill="#ff9900" opacity="0.6"/>
+                            <rect x="130" y="100" width="30" height="100" rx="5" fill="#ff9900" opacity="0.3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 30px; text-align: left;">На что обращает внимание рекрутер</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%;">
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">1</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Общая аккуратность и оформление</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">2</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Последовательность и структурность</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">3</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Правильно указанная целевая роль</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">4</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Соответствие должности наполнению</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">5</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Соответствие навыкам из вакансии</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">6</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Результативность работы</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">7</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Наличие summary</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">8</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Наличие сопроводительного письма</div>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #eef0f2; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                        <div style="flex-shrink: 0; width: 40px; height: 40px; background: #ff9900; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; border-radius: 6px;">9</div>
+                        <div style="font-size: 1rem; font-weight: 600; color: #1a1a1a; line-height: 1.2;">Наличие портфолио</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <h2 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; text-align: left;">ATS — Applicant Tracking Systems</h2>
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px; font-weight: 600;">
+                    Резюме не читается, а парсится и сверяется с фильтрами.
+                </p>
+                
+                <div style="display: flex; width: 100%; align-items: stretch; justify-content: space-between; gap: 20px; background: transparent;">
+                    <div style="flex: 1; background: #ffffff; border: 1px solid #eef0f2; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-top: 5px solid #1a1a1a;">
+                        <h3 style="font-size: 1.5rem; color: #ff9900; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.8rem;">🔍</span> Фильтры ATS
+                        </h3>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 15px; padding: 0;">
+                            <li style="font-size: 1.05rem; line-height: 1.4; color: #333; display: flex; gap: 10px;">
+                                <span style="color: #ff9900; font-weight: 800;">•</span> 
+                                <span><strong>Ключевые слова:</strong> иногда проверка идет «слово в слово» из вакансии.</span>
+                            </li>
+                            <li style="font-size: 1.05rem; line-height: 1.4; color: #333; display: flex; gap: 10px;">
+                                <span style="color: #ff9900; font-weight: 800;">•</span> 
+                                <span><strong>Карьерный трек:</strong> логика переходов и длительность работы.</span>
+                            </li>
+                            <li style="font-size: 1.05rem; line-height: 1.4; color: #333; display: flex; gap: 10px;">
+                                <span style="color: #ff9900; font-weight: 800;">•</span> 
+                                <span><strong>Оформление:</strong> таблицы и креатив часто превращаются в «кашу» при парсинге.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div style="display: flex; align-items: center; justify-content: center; color: #ff9900; font-size: 2.5rem; font-weight: 800;">→</div>
+
+                    <div style="flex: 1; background: #ffffff; border: 1px solid #eef0f2; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-top: 5px solid #ff9900;">
+                        <h3 style="font-size: 1.5rem; color: #1a1a1a; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.8rem;">💡</span> Что делать
+                        </h3>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; padding: 0;">
+                            <li style="background: rgba(255, 153, 0, 0.05); padding: 10px 15px; border-radius: 10px; font-size: 1rem; color: #1a1a1a; border-left: 3px solid #ff9900;">
+                                Использовать стандартные заголовки и термины
+                            </li>
+                            <li style="background: rgba(255, 153, 0, 0.05); padding: 10px 15px; border-radius: 10px; font-size: 1rem; color: #1a1a1a; border-left: 3px solid #ff9900;">
+                                Строго следовать стеку из вакансии
+                            </li>
+                            <li style="background: rgba(255, 153, 0, 0.05); padding: 10px 15px; border-radius: 10px; font-size: 1rem; color: #1a1a1a; border-left: 3px solid #ff9900;">
+                                Отражать результаты в цифрах
+                            </li>
+                            <li style="background: rgba(255, 153, 0, 0.05); padding: 10px 15px; border-radius: 10px; font-size: 1rem; color: #1a1a1a; border-left: 3px solid #ff9900;">
+                                Формат файла: <strong>.docx</strong> или <strong>.pdf</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" id="slide7">
+                <h2 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; text-align: left;">Что сделано хорошо</h2>
+                <p style="font-size: 1.3rem; color: #666; margin-bottom: 25px; font-weight: 600;">Разбор присланных резюме</p>
+                
+                <div style="display: flex; width: 100%; align-items: center; justify-content: flex-start; gap: 30px;">
+                    <div style="flex: 0 0 420px; display: flex; align-items: flex-end;">
+                        <img src="../images/pointer.png" alt="Pointing Illustration" style="width: 100%; height: auto; object-fit: contain;">
+                    </div>
+
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 10px; max-width: 500px;">
+                        <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+                            <span style="font-size: 1.8rem; min-width: 35px; text-align: center;">🧱</span>
+                            <p style="margin: 0; font-size: 1.05rem; line-height: 1.3; color: #333;">
+                                <strong>Структура:</strong> соблюдена четкая последовательность блоков,
+                            </p>
+                        </div>
+
+                        <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+                            <span style="font-size: 1.8rem; min-width: 35px; text-align: center;">👤</span>
+                            <p style="margin: 0; font-size: 1.05rem; line-height: 1.3; color: #333;">
+                                Хорошо оформлена <strong>“шапка”</strong>,
+                            </p>
+                        </div>
+
+                        <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+                            <span style="font-size: 1.8rem; min-width: 35px; text-align: center;">💰</span>
+                            <p style="margin: 0; font-size: 1.05rem; line-height: 1.3; color: #333;">
+                                Не указаны <strong>зарплатные ожидания</strong>: дает маневр.
+                            </p>
+                        </div>
+
+                        <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+                            <span style="font-size: 1.8rem; min-width: 35px; text-align: center;">✉️</span>
+                            <p style="margin: 0; font-size: 1.05rem; line-height: 1.3; color: #333;">
+                                Присланы <strong>сопроводительные письма</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide" data-slide="8">
+                <h2 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; text-align: left;">Общие ошибки</h2>
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 25px; font-weight: 600;">Что мешает рекрутеру рассмотреть вашу кандидатуру</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%;">
+                    
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🖼️</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Нет фото</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">💼</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Нет желаемой должности</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🌐</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Слишком широкая специализация</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🏢</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Юридические названия компаний</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">✏️</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Ошибки</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🚫</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Нерелевантные роли</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">📉</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Мало достижений</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🔢</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Достижения без цифр</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🌊</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Много воды</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">🔗</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Нет ссылок на портфолио</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">👤</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Плохие/нет “О себе”</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 15px; display: flex; align-items: center; gap: 12px; position: relative;">
+                        <span style="font-size: 1.5rem;">📚</span>
+                        <span style="font-size: 0.95rem; font-weight: 500; color: #333;">Много страниц</span>
+                        <span style="position: absolute; top: -5px; right: -5px; background: #be3b2e; color: #fff; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">!</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="slide" data-slide="9">
+                <h1 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; text-align: left;">План «О себе»</h1>
+                
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 25px; font-weight: 600;">Структура идеального summary для резюме</p>
+
+                <ul class="plan-list">
+                <li>
+                    <span>Нынешняя должность + опыт</span>
+                    <button class="hint-btn" data-hint="hint-1">?</button>
+                    <div class="hint-popup" id="hint-1">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Начинающий аналитик данных с пятилетним бэкграундом в сфере логистики. Прошел интенсивную аналитическую переподготовку на курсах Ромашка-аналитик (900+ часов практики), сфокусированную на статистическом анализе и поиске закономерностей в больших массивах данных.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Ключевые достижения</span>
+                    <button class="hint-btn" data-hint="hint-2">?</button>
+                    <div class="hint-popup" id="hint-2">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>В рамках дипломного проекта провел A/B тест для гипотетического маркетплейса: выявил статистически значимое различие в конверсии, что потенциально увеличило бы выручку на 8%. На текущем месте работы автоматизировал отчеты в Excel через Power Query, сократив время их подготовки с 3 часов до 10 минут.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Hard Skills</span>
+                    <button class="hint-btn" data-hint="hint-3">?</button>
+                    <div class="hint-popup" id="hint-3">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Стек: SQL (сложные запросы, JOINs, оконные функции), Python (Pandas, NumPy, Matplotlib/Seaborn), визуализация данных в Tableau и Power BI, базовое владение статистическими критериями (T-test, Mann-Whitney).</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Soft Skills</span>
+                    <button class="hint-btn" data-hint="hint-4">?</button>
+                    <div class="hint-popup" id="hint-4">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Благодаря опыту в логистике умею переводить запросы бизнеса на технический язык. Обладаю навыком презентации сложных выводов простыми словами, что подтверждено успешной защитой трех аналитических кейсов перед экспертами индустрии.</blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Что ищем + контакты</span>
+                    <button class="hint-btn" data-hint="hint-5">?</button>
+                    <div class="hint-popup" id="hint-5">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Ищу позицию Junior Data Analyst в продуктовой или ритейл компании, где смогу применять навыки SQL и Python для оптимизации внутренних процессов и работы с реальными продуктовыми метриками.<br>Иван Иванов, +7-9XX-XXX-XX-XX, Telegram, Портфолио.</blockquote>
+                    </div>
+                </li>
+            </ul>
+            </div>
+
+            <div class="slide orange-break-slide" data-slide="10">
+                <svg class="waves-decor" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity="0.4" stroke="white" stroke-width="1">
+                        <path d="M1280 400C1100 350 900 200 850 0" />
+                        <path d="M1280 430C1080 380 880 230 830 0" />
+                        <path d="M1280 460C1060 410 860 260 810 0" />
+                        <path d="M1280 490C1040 440 840 290 790 0" />
+                        <path d="M1280 520C1020 470 820 320 770 0" />
+                        <path d="M1280 550C1000 500 800 350 750 0" />
+                    </g>
+                    <g opacity="0.4" stroke="white" stroke-width="1">
+                        <path d="M0 300C150 350 350 500 400 720" />
+                        <path d="M0 330C170 380 370 530 420 720" />
+                        <path d="M0 360C190 410 390 560 440 720" />
+                        <path d="M0 390C210 440 410 590 460 720" />
+                        <path d="M0 420C230 470 430 620 480 720" />
+                    </g>
+                </svg>
+                <img src="../images/student.png" alt="Pointing Illustration" style="position: absolute; right: 5%; bottom: 0; max-height: 52vh; width: auto; object-fit: contain; z-index: 2; pointer-events: none;">
+                <div class="text-container">
+                    <h1>Перерыв на<br>вопросы</h1>
+                </div>
+            </div>
+            <div class="slide" data-slide="11">
+                <h1 style="font-size: 56px; font-weight: 800; color: #1a1a1a; text-align: center; margin-bottom: 50px;">Прожарка 🥩 🔥</h1>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
+                    
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Анастасия</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1CKVG-j3l4dhu4pTnQggXCXdXFcZba1qQ/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Никита</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1AgM6mFKhlBpwcWbiWPviuNsuM4WGABSM/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Анастасия</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1NjJsBUlpWa8ZhlgQkEZ-0UQRGJ183u9v/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                            <a href="https://drive.google.com/file/d/1l2dpkRF7JC2N1eVM2OXdpbBwzSaH7Fcs/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Сопроводительное письмо</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Артем</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/19uuxUiQ9iwriSVzbzO96mmDfHSlLvm6C/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Резюме</a>
+                        </div>
+                    </div>
+
+                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                        <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;">Ирина</span>
+                        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                            <a href="https://drive.google.com/file/d/1ihS5mRZfZEB07Y4TuS4DDvEPcoYYZy3b/view?usp=drive_link" target="_blank" style="display: block; width: 100%; padding: 10px 16px; background-color: #fff5f2; border: 1px solid #ffd8cc; color: #ff9900; text-decoration: none; border-radius: 8px; font-weight: 600; text-align: center;">Сопроводительное письмо</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <footer class="footer">
+        <div class="footer-controls">
+            <button class="nav-btn" id="prevBtn">← Назад</button>
+            <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">12</span></div>
+            <button class="nav-btn" id="nextBtn">Вперед →</button>
+        </div>
+
+        <div class="footer-bottom-row">
+            <div class="footer-section">
+                <span class="footer-label">Рожкова Наталья | HR</span>
+                <span class="footer-divider">·</span>
+                <a href="mailto:narozhkova53@gmail.com" class="footer-link">📧 narozhkova53@gmail.com</a>
+                <span class="footer-divider">·</span>
+                <a href="https://t.me/narozhkova" target="_blank" class="footer-link">Telegram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const container = document.getElementById('slidesContainer');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            container.scrollTop = 0;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        document.getElementById('nextBtn').onclick = () => { if (currentSlide < totalSlides - 1) showSlide(++currentSlide); };
+        document.getElementById('prevBtn').onclick = () => { if (currentSlide > 0) showSlide(--currentSlide); };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
+            if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
+        });
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        showSlide(0);
+        document.querySelectorAll('.hint-popup').forEach(popup => {
+            document.body.appendChild(popup);
+        });
+
+        function closeAllHints() {
+            document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        document.querySelectorAll('.hint-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const popup = document.getElementById(btn.dataset.hint);
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                popup.classList.add('active');
+                document.getElementById('overlay').classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.hint-close').forEach(btn => {
+            btn.addEventListener('click', closeAllHints);
+        });
+
+        document.getElementById('overlay').addEventListener('click', closeAllHints);
+    </script>
+</body>
+</html>
