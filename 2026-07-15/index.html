@@ -293,6 +293,8 @@
             padding: 2rem 2.5rem;
             max-width: 700px;
             width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
             z-index: 1000;
             box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
             animation: popIn 0.25s ease;
@@ -421,7 +423,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f5f5f7;
+            background: transparent;
             color: #2d758b;
             font-size: 2rem;
             font-weight: 700;
@@ -634,17 +636,10 @@
         .tile-link:hover {
             background: #89c0d1;
             transform: translateX(4px);
-        
-.slide {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    padding: 50px;
-    height: 720px;
-}
+        }
 
 .header-section {
-    text-align: center;
+    text-align: left;
     margin-bottom: 40px;
 }
 
@@ -662,33 +657,40 @@
 
 .content-main {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 60px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2.5rem;
     width: 100%;
+}
+
+.content-main-to-left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-shrink: 0;
 }
 
 .left-gallery {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 20px;
-    max-width: 400px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: center;
 }
 
 .logo-item {
     width: 120px;
     height: 120px;
-    object-fit: contain; 
+    object-fit: contain;
     background: #fff;
-    padding: 10px;
+    padding: 8px;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 .big-photo {
-    width: 450px;
-    height: 450px;
+    width: 20vw;
+    height: 20vw;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 24px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 .hint-image {
@@ -707,9 +709,12 @@
 }
 .hint-popup img.hint-image {
     max-width: 100%;
+    max-height: 65vh;
+    width: auto;
     height: auto;
+    object-fit: contain;
     display: block;
-    margin: 15px auto; 
+    margin: 15px auto;
     border-radius: 8px;
 }
 .hover-trigger {
@@ -744,7 +749,6 @@
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
-        }
         /* Footer */
         .footer {
             position: fixed;
@@ -778,7 +782,8 @@
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            pointer-events: auto; 
+            pointer-events: auto;
+            margin-top: 0;
         }
         .footer-bottom-row {
             position: absolute;
@@ -871,28 +876,28 @@
             <h1>Поиск работы в 2026 году</h1>
         </div>
 
-<div class="slide" data-slide="2">
+        <div class="slide" data-slide="2">
 
-    <div class="header-section">
-        <h1>Наталья Рожкова</h1>
-        <p class="subtitle">HR и карьерный консультант</p>
-    </div>
-    <div class="content-main">
-    
-        <div class="left-gallery">
-            <img src="hse.png" alt="НИУ ВШЭ" class="logo-item">
-            <img src="ancor.png" alt="ANCOR" class="logo-item">
-            <img src="hrtech.png" alt="HRTech" class="logo-item">
-            <img src="ekivium.png" alt="Эквиум" class="logo-item">
-            <img src="simulative.png" alt="Simulative" class="logo-item">
+            <div class="header-section">
+                <h1>Наталья Рожкова</h1>
+                <p class="subtitle">HR и карьерный консультант</p>
+            </div>
+            <div class="content-main">
+                <div class="content-main-to-left">
+                    <div class="right-main">
+                        <img src="../images/slide2me.jpg" alt="Рожкова Наталья" class="big-photo">
+                    </div>
+                </div>
+                <div class="left-gallery">
+                    <img src="../images/slide2.png" alt="НИУ ВШЭ" class="logo-item">
+                    <img src="../images/slide_2_1.jpg" alt="ANCOR" class="logo-item">
+                    <img src="../images/slide2_2.jpg" alt="HRTech" class="logo-item">
+                    <img src="../images/slide2_3.png" alt="Эквиум" class="logo-item">
+                    <img src="../images/slide2_5.png" alt="Simulative" class="logo-item">
+                </div>
+            </div>
         </div>
-        <div class="right-main">
-            <img src="" alt="Рожкова Наталья" class="big-photo">
-        </div>
-        
-    </div>
-</div>
-<div class="slide" data-slide="3">
+        <div class="slide" data-slide="3">
             <h2>О чем поговорим 📑</h2>
             <ul class="plan-list" style="list-style-type: none; padding-left: 0; width: 100%;">
                 <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
@@ -976,42 +981,40 @@
                 </div>
             </div>
         </div>
+        <div class="slide" data-slide="5">
+            <h2>Поиск работы - отдельная важная занятость. С чего начать?</h2>
+            <div class="cards-row">
+                <div class="card card-success" onclick="openPopup('../images/slide5.jpg')">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">🔍</span>
+                    <span class="card-title">Честно определить мотивацию</span>
+                </div>
+                
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">⚖️</span>
+                    <span class="card-title">Провести аудит достижений</span>
+                    <span class="card-desc">+ оценить зоны роста</span>
+                </div>
 
-</div>
-<div class="slide" data-slide="5">
-    <h2>Поиск работы - отдельная важная занятость. С чего начать?</h2>
-    <div class="cards-row">
-        <div class="card card-success" onclick="openPopup('img-motivation.jpg')">
-            <div class="card-glow"></div>
-            <span class="card-icon">🔍</span>
-            <span class="card-title">Честно определить мотивацию</span>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">🗺️</span>
+                    <span class="card-title">Разработать стратегию</span>
+                </div>
+                
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-icon">🎨</span>
+                    <span class="card-title">Подготовить материалы</span>
+                </div>
+            </div>
+            <div id="image-popup" class="popup-overlay" onclick="closePopup()">
+                <div class="popup-content">
+                    <img id="popup-img" src="" alt="Мотивация">
+                </div>
+            </div>
         </div>
-        
-        <div class="card card-success">
-            <div class="card-glow"></div>
-            <span class="card-icon">⚖️</span>
-            <span class="card-title">Провести аудит достижений</span>
-            <span class="card-desc">+ оценить зоны роста</span>
-        </div>
-
-        <div class="card card-success">
-            <div class="card-glow"></div>
-            <span class="card-icon">🗺️</span>
-            <span class="card-title">Разработать стратегию</span>
-        </div>
-        
-        <div class="card card-success">
-            <div class="card-glow"></div>
-            <span class="card-icon">🎨</span>
-            <span class="card-title">Подготовить материалы</span>
-        </div>
-    </div>
-    <div id="image-popup" class="popup-overlay" onclick="closePopup()">
-        <div class="popup-content">
-            <img id="popup-img" src="" alt="Мотивация">
-        </div>
-    </div>
-</div>
         <div class="slide" data-slide="6">
             <h2>Материалы о кандидате для рынка труда</h2>
             <ul class="plan-list">
@@ -1031,16 +1034,14 @@
                         </blockquote>
                     </div>
                 </li>
-                    <li class="hint-container">
+                <li class="hint-container">
                     <span>Ключевой актив - то, что вы уже делали успешно</span>
                     <button class="hint-btn" data-hint="hint-cover-2">?</button>
-    
                     <div class="hint-popup" id="hint-cover-2">
-                    <button class="hint-close">&times;</button>
-
-        <img src="ваша_картинка.jpg" alt="Актив" class="hint-image">
-    </div>
-</li>
+                        <button class="hint-close">&times;</button>
+                        <img src="../images/slide6.jpg" alt="Актив" class="hint-image">
+                    </div>
+                </li>
                 <li>
                     <span>Саммари/Раздел "О себе" внутри резюме</span>
                     <button class="hint-btn" data-hint="hint-cover-3">?</button>
@@ -1124,8 +1125,7 @@
                 </div>
             </div>
         </div>
-</div>
-                <div class="slide" data-slide="9">
+        <div class="slide" data-slide="9">
             <h2>Оценка вакансии = экономия нервных клеток</h2>
             <h3>На какие вопросы важно знать ответы</h3>
             <div class="tiles-grid">
@@ -1153,19 +1153,19 @@
                     <span class="tile-icon">⚠️</span>
                     <span class="tile-text">Какие могут возникнуть проблемы?</span>
                 </div>
+            </div>
         </div>
+        <div class="slide" data-slide="10">
+            <div class="content-wrapper">
+                <div class="text-side">
+                    <h2>Собеседование</h2>
+                    <p>Основная цель - отвечать на вопросы так, чтобы уменьшать количество следующих, а не провоцировать новые.</p>
                 </div>
-                <div class="slide" data-slide="10">
-    <div class="content-wrapper">
-        <div class="text-side">
-            <h2>Собеседование</h2>
-            <p>Основная цель - отвечать на вопросы так, чтобы уменьшать количество следующих, а не провоцировать новые.</p>
+                <div class="image-side">
+                    <img src="../images/slide10.jpg" alt="Описание фото">
+                </div>
+            </div>
         </div>
-        <div class="image-side">
-            <img src="../img/your-photo.jpg" alt="Описание фото">
-        </div>
-    </div>
-</div>
 
         <div class="slide" data-slide="11">
             <h2>Собеседование: что делать?</h2>
@@ -1211,24 +1211,21 @@
                 </div>
             </div>
         </div>
-                        <div class="slide" data-slide="12">
-    <div class="content-wrapper">
-        <div class="text-side">
-            <h2>Деньги</h2>
-            <p>“Изучив рынок и сопоставив свою кандидатуру с претендентами со схожим опытом опытом, я рассматриваю вилку от ... до ..., но готова обсуждать варианты, поскольку ваша вакансия кажется мне интересной”</p>
+        <div class="slide" data-slide="12">
+            <div class="content-wrapper">
+                <div class="text-side">
+                    <h2>Деньги</h2>
+                    <p>“Изучив рынок и сопоставив свою кандидатуру с претендентами со схожим опытом опытом, я рассматриваю вилку от ... до ..., но готова обсуждать варианты, поскольку ваша вакансия кажется мне интересной”</p>
+                </div>
+                <div class="image-side">
+                    <img src="../images/slide12.jpg" alt="Описание фото">
+                </div>
+            </div>
         </div>
-        <div class="image-side">
-            <img src="../img/your-photo.jpg" alt="Описание фото">
-        </div>
-    </div>
-</div>
 
-        <div class="slide" data-slide="11">
+        <div class="slide" data-slide="13">
             <h1>Выводы и вопросы 🏁</h1>
         </div>
-
-    
-
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
@@ -1292,28 +1289,19 @@
         document.getElementById('totalSlides').textContent = totalSlides;
         showSlide(0);
 
-// Закрытие
-document.querySelectorAll('.hint-close').forEach(btn => {
-    btn.addEventListener('click', function() {
-        this.closest('.hint-popup').style.display = 'none';
-    });
-});
-function openPopup(hintId) {
+        function openPopup(src) {
+            document.getElementById('popup-img').src = src;
+            document.getElementById('image-popup').style.display = 'flex';
+        }
 
-    const sourceContent = document.getElementById(hintId).innerHTML;
-
-    const modalBody = document.querySelector('.popup-content');
-    modalBody.innerHTML = sourceContent;
-
-    document.getElementById('modal-overlay').style.display = 'flex';
-}
-
+        function closePopup() {
+            document.getElementById('image-popup').style.display = 'none';
+        }
 </script>
-    </script>
     <footer class="footer">
-        <div class="controls class="footer-controls">
+        <div class="controls footer-controls">
             <button onclick="prevSlide()" id="prevBtn" disabled>← Назад</button>
-            <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+            <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">13</span></div>
             <button onclick="nextSlide()" id="nextBtn">Далее →</button>
         </div>
         <div class="footer-bottom-row">
