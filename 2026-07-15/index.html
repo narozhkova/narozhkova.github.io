@@ -854,12 +854,19 @@
     }
 }
 .popup-content {
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 90vw;
+    max-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #popup-img {
-    width: 100%;
+    max-width: 90vw;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(255,255,255,0.2);
 }
@@ -870,6 +877,11 @@
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
+    <div id="image-popup" class="popup-overlay" onclick="closePopup()">
+        <div class="popup-content">
+            <img id="popup-img" src="" alt="">
+        </div>
+    </div>
     <a href="../index.html" class="back">← Назад к меню</a>
 
         <div class="slide active" data-slide="1">
@@ -1009,11 +1021,6 @@
                     <span class="card-title">Подготовить материалы</span>
                 </div>
             </div>
-            <div id="image-popup" class="popup-overlay" onclick="closePopup()">
-                <div class="popup-content">
-                    <img id="popup-img" src="" alt="Мотивация">
-                </div>
-            </div>
         </div>
         <div class="slide" data-slide="6">
             <h2>Материалы о кандидате для рынка труда</h2>
@@ -1126,7 +1133,7 @@
             </div>
         </div>
         <div class="slide" data-slide="9">
-            <h2>Оценка вакансии = экономия нервных клеток</h2>
+            <h2 onclick="openPopup('../images/slide9.jpg')" style="cursor: pointer;" title="Нажмите для просмотра">Оценка вакансии = экономия нервных клеток</h2>
             <h3>На какие вопросы важно знать ответы</h3>
             <div class="tiles-grid">
                 <div class="tile">
