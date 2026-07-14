@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/ico" href="../ico/favicon.ico" />
+    <title>Поиск работы в 2026 году</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Manrope', 'Inter','Segoe UI','Geneva', 'Tahoma','Verdana', 'sans-serif';
+            background: #f5f5f7;
+            color: #2d2d2d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 4rem;
+        }
+        body {
+    --center-color: #ffffff; 
+    --edge-color: #e9f3ff;  
+    background-image: radial-gradient(
+        circle closest-corner at center, 
+        var(--center-color) 0%,        
+        var(--edge-color) 90%          
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    height: 100vh;
+    margin: 0;
+        }                
+        .back {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+        
+        .back:hover { color: #333; }
+        .slide {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            width: 85%;
+            max-width: 1000px;
+            min-height: 70vh;
+            padding: 3rem 4rem;
+            justify-content: center;
+        }
+        .slide.active { display: flex; }
+        .slide h1 { font-size: 2.8rem; text-align: center; width: 100%; color: #1a1a1a; }
+        .slide h2 { font-size: 2rem; margin-bottom: 0.5rem; color: #2d758b; }
+        .slide p {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        .slide blockquote {
+            background: rgba(0, 0, 0, 0.04);
+            border-left: 4px solid #c0392b;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            width: 100%;
+        }
+        .plan-grid {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 50px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.plan-item {
+    font-size: 22px;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.6);
+    border-left: 5px solid #2d758b;
+    border-radius: 5px;
+    width: 350px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.slide-header h1 {
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+        .slide ul {
+            padding-left: 1.5rem;
+            line-height: 2;
+            color: #444;
+            font-size: 1.1rem;
+        }
+        .slide ul li { margin-bottom: 0.3rem; }
+        /* Slide subtitle */
+        .slide-subtitle {
+            font-size: 1rem;
+            color: #999;
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        /* Controls */
+        .controls {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .controls button {
+            padding: 0.75rem 1.8rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #2d758b;
+            color: #fff;
+            font-weight: 600;
+            transition: background 0.2s, opacity 0.2s;
+        }
+        .controls button:hover { background: #89c0d1; }
+        .controls button:disabled { opacity: 0.35; cursor: default; }
+        .counter {
+            font-size: 1.1rem;
+            min-width: 100px;
+            text-align: center;
+            color: #888;
+        }
+        /* Success cards row */
+        .cards-row {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .card {
+            flex: 1;
+            max-width: 280px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 18px;
+            padding: 2.5rem 1.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        .card-success {
+            border-top: 3px solid #2d758b;
+        }
+        .card-success .card-glow {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(39, 174, 96, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 0.3rem;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .card-desc {
+            font-size: 0.95rem;
+            color: #777;
+            line-height: 1.5;
+        }
+        @media (max-width: 700px) {
+            .cards-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+        /* Error cards grid */
+        .errors-grid {
+            display: grid;
+            grid-template-columns: minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr);
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .error-card {
+            position: relative;
+            background: #2d758b;
+            border: 1px solid #2d758b;
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s, z-index 0s;
+            z-index: 1;
+        }
+        .error-card:hover {
+            background: rgba(202, 228, 240, 0.1);
+            transform: scale(1.10);
+            box-shadow: 0 12px 35px rgba(192, 57, 43, 0.12);
+            z-index: 10;
+        }
+        .error-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+        .error-text {
+            font-size: 0.95rem;
+            color: #2d758b;
+            line-height: 1.4;
+            flex: 1;
+        }
+        @media (max-width: 700px) {
+            .errors-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Plan list with hint buttons */
+        .plan-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .plan-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+            font-size: 1.15rem;
+            color: #444;
+            position: relative;
+        }
+        .plan-list li:last-child { border-bottom: none; }
+        .plan-list li span { flex: 1; }
+        .hint-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #2d758b;
+            background: transparent;
+            color: #2d758b;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .hint-btn:hover {
+            background: #89c0d1;
+            color: #fff;
+        }
+        /* Popup */
+        .hint-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 700px;
+            width: 90%;
+            z-index: 1000;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.25s ease;
+        }
+        .hint-popup.active { display: block; }
+        .hint-popup blockquote {
+            margin: 0;
+            border-left: 4px solid #2d758b;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            font-style: italic;
+            color: #444;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        .hint-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .hint-close:hover { color: #333; }
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        /* Checklist style */
+        .checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 1rem 1.2rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.5;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 0.6rem;
+        }
+        .checklist li:hover {
+            background: #fafafa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        .check {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .checklist.checklist-2col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+            flex-direction: unset;
+        }
+        .checklist.checklist-3col {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem 2rem;
+            flex-direction: unset;
+        }
+        @media (max-width: 700px) {
+            .checklist.checklist-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Steps vertical rows */
+        .steps-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+        }
+        .step-row {
+            display: flex;
+            align-items: stretch;
+            gap: 0.6rem;
+            width: 100%;
+            transition: transform 0.2s;
+            min-height: 80px;
+        }
+        .step-row:hover {
+            transform: translateX(4px);
+        }
+        .step-problem {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 1.2rem 1.2rem;
+            width: 280px;
+            flex-shrink: 0;
+        }
+        .step-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f7;
+            color: #2d758b;
+            font-size: 2rem;
+            font-weight: 700;
+            width: 40px;
+            flex-shrink: 0;
+        }
+        .step-solution {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            padding: 1.2rem 1.2rem;
+            flex: 1;
+        }
+        .step-solution span {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.5;
+        }
+        @media (max-width: 700px) {
+            .step-row {
+                flex-direction: column;
+                align-items: stretch;
+                min-height: unset;
+            }
+            .step-problem {
+                border-radius: 10px 10px 0 0;
+                width: 100%;
+            }
+            .step-connector {
+                width: 100%;
+                height: 30px;
+            }
+            .step-solution {
+                border-radius: 0 0 10px 10px;
+                border-left: 1px solid rgba(131, 179, 234, 0.2);
+            }
+        }
+        .split-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #c0392b 30%, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+            font-weight: 900;
+            width: 30px;
+            flex-shrink: 0;
+        }
+        /* Block tiles grid */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+        .tile {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.5rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .tile:hover {
+            background: #fafafa;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        .tile-icon {
+            font-size: 2.2rem;
+        }
+        .tile-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        /* Centered link under content */
+        .slide-link-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        .slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.8rem;
+            background: rgba(192, 57, 43, 0.06);
+            border: 1px solid rgba(192, 57, 43, 0.2);
+            border-radius: 10px;
+            color: #c0392b;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .slide-cta:hover {
+            background: rgba(192, 57, 43, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.1);
+        }
+        /* Split layout */
+        .split-layout {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .split-left,
+        .split-right {
+            flex: 1;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            padding: 1.8rem 1.5rem;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .split-left:hover,
+        .split-right:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+        .split-left {
+            border-top: 3px solid #c0392b;
+        }
+        .split-right {
+            border-top: 3px solid #27ae60;
+        }
+        .split-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .split-icon {
+            font-size: 1.6rem;
+        }
+        .split-header h3 {
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            margin: 0;
+        }
+        .split-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .split-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.6rem 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+            color: #555;
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+        .split-list li:last-child {
+            border-bottom: none;
+        }
+        .list-marker {
+            flex-shrink: 0;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        @media (max-width: 700px) {
+            .split-layout {
+                flex-direction: column;
+            }
+        }
+        /* Resource tiles with links */
+        .tile-resource {
+            align-items: center;
+            gap: 1rem;
+        }
+        .tile-text-bold {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .tile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .tile-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1rem;
+            background: #2d758b;
+            border: 1px solid rgba(192, 57, 43, 0.15);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .tile-link:hover {
+            background: #89c0d1;
+            transform: translateX(4px);
+        
+.slide {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    padding: 50px;
+    height: 720px;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header-section h1 {
+    font-size: 56px;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.header-section .subtitle {
+    font-size: 28px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.content-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    width: 100%;
+}
+
+.left-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    max-width: 400px;
+}
+
+.logo-item {
+    width: 120px;
+    height: 120px;
+    object-fit: contain; 
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.big-photo {
+    width: 450px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+.hint-image {
+    width: 100%;        
+    max-width: 500px;   
+    height: auto;       
+    display: block;     
+    margin-top: 15px;   
+    border-radius: 8px; 
+}
+
+
+.hint-popup {
+    padding: 20px;
+    text-align: center; 
+}
+.hint-popup img.hint-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 15px auto; 
+    border-radius: 8px;
+}
+.hover-trigger {
+    cursor: help; /* Указывает, что элемент интерактивен */
+    transition: color 0.3s;
+}
+
+.hover-trigger:hover {
+    color: #2d758b;
+    text-decoration: underline;
+}
+
+/* Стили для попапа */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+#popup-img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+        }
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background: transparent; 
+            padding: 0 2.5rem;
+            z-index: 9999;
+            pointer-events: none; 
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 110px;
+            background: transparent; 
+            padding: 0 2.5rem;
+            z-index: 9999;
+            pointer-events: none; 
+        }
+
+        .footer-controls {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            pointer-events: auto; 
+        }
+        .footer-bottom-row {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%); 
+            display: flex;
+            justify-content: center;
+            pointer-events: auto;
+        }
+        
+        .footer-section {
+            display: flex; 
+            align-items: center; 
+            gap: 0.9rem; 
+            font-size: 0.9rem; 
+            color: #555;
+            background: rgba(255, 255, 255, 0.6); 
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(4px); 
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        .footer-link {
+            text-decoration: none; color: #555; font-weight: 500;
+            display: flex; align-items: center; gap: 0.3rem;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: #236579; }
+        .popup-overlay {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.content-wrapper {
+    display: flex;
+    flex-direction: row; 
+    gap: 40px;           
+    align-items: center; 
+    width: 100%;
+}
+
+.text-side {
+    flex: 1;             
+}
+
+.image-side {
+    flex: 0 0 40%;       
+}
+
+.image-side img {
+    width: 100%;        
+    height: auto;
+    border-radius: 16px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column; 
+    }
+    .image-side {
+        width: 100%;
+    }
+}
+.popup-content {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+#popup-img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.card { cursor: pointer; transition: transform 0.2s; }
+.card:hover { transform: scale(1.02); }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <a href="../index.html" class="back">← Назад к меню</a>
+
+        <div class="slide active" data-slide="1">
+            <h1>Поиск работы в 2026 году</h1>
+        </div>
+
+<div class="slide" data-slide="2">
+
+    <div class="header-section">
+        <h1>Наталья Рожкова</h1>
+        <p class="subtitle">HR и карьерный консультант</p>
+    </div>
+    <div class="content-main">
+    
+        <div class="left-gallery">
+            <img src="hse.png" alt="НИУ ВШЭ" class="logo-item">
+            <img src="ancor.png" alt="ANCOR" class="logo-item">
+            <img src="hrtech.png" alt="HRTech" class="logo-item">
+            <img src="ekivium.png" alt="Эквиум" class="logo-item">
+            <img src="simulative.png" alt="Simulative" class="logo-item">
+        </div>
+        <div class="right-main">
+            <img src="" alt="Рожкова Наталья" class="big-photo">
+        </div>
+        
+    </div>
+</div>
+<div class="slide" data-slide="3">
+            <h2>О чем поговорим 📑</h2>
+            <ul class="plan-list" style="list-style-type: none; padding-left: 0; width: 100%;">
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">1</span>
+                    <span style="line-height: 1.4; flex: 1;">Как выглядит рынок труда в 2026 году?</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">2</span>
+                    <span style="line-height: 1.4; flex: 1;">С чего начать поиск работы?</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">3</span>
+                    <span style="line-height: 1.4; flex: 1;">Материалы кандидата. Резюме</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">4</span>
+                    <span style="line-height: 1.4; flex: 1;">Фильтры на входе</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">5</span>
+                    <span style="line-height: 1.4; flex: 1;">Где искать вакансии и как их оценивать?</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: 2px solid rgba(0, 0, 0, 0.08);">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">6</span>
+                    <span style="line-height: 1.4; flex: 1;">Этапы отбора</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; justify-content: flex-start; gap: 15px; padding: 1rem 0; border-bottom: none;">
+                    <span style="color: #2d758b; font-weight: 800; font-size: 21px; flex: unset; min-width: auto; line-height: 1.3;">7</span>
+                    <span style="line-height: 1.4; flex: 1;">Прохождение собеседований и финансовые переговоры</span>
+                </li>
+            </ul>
+        </div>
+            </div>
+        </div>
+        </div>
+        <div class="slide" data-slide="4">
+            <h2>Обзор рынка труда в России в 2026 году</h2>
+            <div class="checklist checklist-3col">
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Рынок работодателя</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>↓ числа вакансий и ↑ конкуренции</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Рост требований к кандидатам</span>
+                    </li>
+                </div>
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>ИИ повышает аппетиты</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Замедление роста зарплат</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>География имеет значение</span>
+                    </li>
+                    
+                </div>
+                <div>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Совмещение</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Поиск может занять 3-6 месяцев</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Нетворкинг и точечный найм</span>
+                    </li>
+                </div>
+            </div>
+        </div>
+
+</div>
+<div class="slide" data-slide="5">
+    <h2>Поиск работы - отдельная важная занятость. С чего начать?</h2>
+    <div class="cards-row">
+        <div class="card card-success" onclick="openPopup('img-motivation.jpg')">
+            <div class="card-glow"></div>
+            <span class="card-icon">🔍</span>
+            <span class="card-title">Честно определить мотивацию</span>
+        </div>
+        
+        <div class="card card-success">
+            <div class="card-glow"></div>
+            <span class="card-icon">⚖️</span>
+            <span class="card-title">Провести аудит достижений</span>
+            <span class="card-desc">+ оценить зоны роста</span>
+        </div>
+
+        <div class="card card-success">
+            <div class="card-glow"></div>
+            <span class="card-icon">🗺️</span>
+            <span class="card-title">Разработать стратегию</span>
+        </div>
+        
+        <div class="card card-success">
+            <div class="card-glow"></div>
+            <span class="card-icon">🎨</span>
+            <span class="card-title">Подготовить материалы</span>
+        </div>
+    </div>
+    <div id="image-popup" class="popup-overlay" onclick="closePopup()">
+        <div class="popup-content">
+            <img id="popup-img" src="" alt="Мотивация">
+        </div>
+    </div>
+</div>
+        <div class="slide" data-slide="6">
+            <h2>Материалы о кандидате для рынка труда</h2>
+            <ul class="plan-list">
+                    <li>
+                    <span>Резюме</span>
+                    <button class="hint-btn" data-hint="hint-cover-1">?</button>
+                    <div class="hint-popup" id="hint-cover-1">
+                        <button class="hint-close">&times;</button>
+                        <blockquote>Что наиболее важно:<br>
+                            <ul>
+                                <li>Минималистичное оформление без ошибок;</li><br>
+                                <li>Много информации о кандидате с контактами в легком доступе;</li><br>
+                                <li>Желаемая должность и узкая специализация;</li><br>
+                                <li>Только релевантный опыт с фразами из вакансии(не на 5 страниц), НЕТ пустому листу;</li><br>
+                                <li>Достижения + обязанности + стек технологий*.</li><br>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </li>
+                    <li class="hint-container">
+                    <span>Ключевой актив - то, что вы уже делали успешно</span>
+                    <button class="hint-btn" data-hint="hint-cover-2">?</button>
+    
+                    <div class="hint-popup" id="hint-cover-2">
+                    <button class="hint-close">&times;</button>
+
+        <img src="ваша_картинка.jpg" alt="Актив" class="hint-image">
+    </div>
+</li>
+                <li>
+                    <span>Саммари/Раздел "О себе" внутри резюме</span>
+                    <button class="hint-btn" data-hint="hint-cover-3">?</button>
+                    <div class="hint-popup" id="hint-cover-3">
+                        <button class="hint-close">&times;</button>
+                        <blockquote><br>
+                            <ul>
+                                <li>Структурированный и понятный текст, без рассказа о любви к вышиванию;</li><br>
+                                <li>Коротко про опыт и нынешнюю позицию, ключевые достижения, hard и soft skills;</li><br>
+                                <li>Желаемая должность и способы с вами связаться;</li><br>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </li>
+                <li>
+                    <span>Портфолио</span>
+                    <button class="hint-btn" data-hint="hint-cover-4">?</button>
+                    <div class="hint-popup" id="hint-cover-4">
+                        <button class="hint-close">&times;</button>
+                        <blockquote><br>
+                            <ul>
+                                <li>Код на GitHub;</li><br>
+                                <li>Примеры творческих проектов;</li><br>
+                                <li>Описание в удобном формате особенно успешных кейсов.</li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="slide" data-slide="7">
+            <h2>Первый барьер: ATS - Applicant Tracking Systems</h2>
+            <h3>Резюме не читается, а парсится и сверяется с фильтрами</h3>
+            <div class="split-layout">
+                <div class="split-left">
+                    <h3>Фильтры ATS</h3>
+                    <ul>
+                        <li>Ключевым слова из вакансии;</li>
+                        <li>Карьерный трек;</li>
+                        <li>Оформление.</li>
+                    </ul>
+                </div>
+                <div class="split-arrow">→</div>
+                <div class="split-right">
+                    <h3>Что делать</h3>
+                    <ul>
+                        <li>Никакого креатива;</li>
+                        <li>Стандартные заголовки и термины;</li>
+                        <li>Слова и стек из вакансии;</li>
+                        <li>Цифры и глаголы;</li>
+                        <li>Стандартные шрифты;</li>
+                        <li>Формате .docx или .pdf.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slide" data-slide="8">
+            <h2>Стратегия поиска</h2>
+            <h3>В день нужно делать минимум 15 качественных откликов в нескольких каналах:</h3>
+            <div class="cards-row">
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Работные сайты</span>
+                    <span class="card-desc">HH, LinkedIn</span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Нетворк</span>
+                    <span class="card-desc">мероприятия, реферальные прогрыммы</span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Карьерные страницы компаний</span>
+                    <span class="card-desc"></span>
+                </div>
+                <div class="card card-success">
+                    <div class="card-glow"></div>
+                    <span class="card-title">Телеграм</span>
+                    <span class="card-desc">профильные чаты + чаты с вакансиями + getmatch</span>
+                </div>
+            </div>
+        </div>
+</div>
+                <div class="slide" data-slide="9">
+            <h2>Оценка вакансии = экономия нервных клеток</h2>
+            <h3>На какие вопросы важно знать ответы</h3>
+            <div class="tiles-grid">
+                <div class="tile">
+                    <span class="tile-icon">🏢</span>
+                    <span class="tile-text">Что это за компания?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🧩</span>
+                    <span class="tile-text">Кто такой этот специалист и что он делает на ежедневной основе?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">🎯</span>
+                    <span class="tile-text">Каковы требования для кандидата и как проходит процесс отбора?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">✨</span>
+                    <span class="tile-text">Почему мне нравится вакансия?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">⚙️</span>
+                    <span class="tile-text">Почему я на нее подхожу?</span>
+                </div>
+                <div class="tile">
+                    <span class="tile-icon">⚠️</span>
+                    <span class="tile-text">Какие могут возникнуть проблемы?</span>
+                </div>
+        </div>
+                </div>
+                <div class="slide" data-slide="10">
+    <div class="content-wrapper">
+        <div class="text-side">
+            <h2>Собеседование</h2>
+            <p>Основная цель - отвечать на вопросы так, чтобы уменьшать количество следующих, а не провоцировать новые.</p>
+        </div>
+        <div class="image-side">
+            <img src="../img/your-photo.jpg" alt="Описание фото">
+        </div>
+    </div>
+</div>
+
+        <div class="slide" data-slide="11">
+            <h2>Собеседование: что делать?</h2>
+            <div class="steps-vertical">
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Уверенность</span>
+                    </div>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Вежливое общение на равных и умение вовремя остановиться</span>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Умение доносить свою пользу</span>
+                    </div>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Достижения и результаты с цифрами и конкретными примерами кейсов</span>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Ответы по STAR</span>
+                    </div>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>S - Situation (контекст), T - Task (что нужно было сделать), A - Action (что и какими техническими средствамибыло сделано), R - Result (результат)</span>
+                    </div>
+                </div>
+
+                <div class="step-row">
+                    <div class="step-problem">
+                        <span class="step-title">Вопросы</span>
+                    </div>
+                    <div class="step-connector">→</div>
+                    <div class="step-solution">
+                        <span>Не только отвечаем, но и задаем</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+                        <div class="slide" data-slide="12">
+    <div class="content-wrapper">
+        <div class="text-side">
+            <h2>Деньги</h2>
+            <p>“Изучив рынок и сопоставив свою кандидатуру с претендентами со схожим опытом опытом, я рассматриваю вилку от ... до ..., но готова обсуждать варианты, поскольку ваша вакансия кажется мне интересной”</p>
+        </div>
+        <div class="image-side">
+            <img src="../img/your-photo.jpg" alt="Описание фото">
+        </div>
+    </div>
+</div>
+
+        <div class="slide" data-slide="11">
+            <h1>Выводы и вопросы 🏁</h1>
+        </div>
+
+    
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            else if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        const overlay = document.getElementById('overlay');
+
+        document.querySelectorAll('.hint-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const popup = document.getElementById(btn.dataset.hint);
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                popup.classList.add('active');
+                overlay.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.hint-close').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+                overlay.classList.remove('active');
+            });
+        });
+
+        overlay.addEventListener('click', () => {
+            document.querySelectorAll('.hint-popup.active').forEach(p => p.classList.remove('active'));
+            overlay.classList.remove('active');
+        });
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+        showSlide(0);
+
+// Закрытие
+document.querySelectorAll('.hint-close').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.closest('.hint-popup').style.display = 'none';
+    });
+});
+function openPopup(hintId) {
+
+    const sourceContent = document.getElementById(hintId).innerHTML;
+
+    const modalBody = document.querySelector('.popup-content');
+    modalBody.innerHTML = sourceContent;
+
+    document.getElementById('modal-overlay').style.display = 'flex';
+}
+
+</script>
+    </script>
+    <footer class="footer">
+        <div class="controls class="footer-controls">
+            <button onclick="prevSlide()" id="prevBtn" disabled>← Назад</button>
+            <div class="counter"><span id="currentSlide">1</span> / <span id="totalSlides">11</span></div>
+            <button onclick="nextSlide()" id="nextBtn">Далее →</button>
+        </div>
+        <div class="footer-bottom-row">
+            <div class="footer-section">
+                <span class="footer-label">Рожкова Наталья | HR</span>
+                <span class="footer-divider">·</span>
+                <a href="mailto:narozhkova53@gmail.com" class="footer-link">📧 narozhkova53@gmail.com</a>
+                <span class="footer-divider">·</span>
+                <a href="https://t.me/narozhkova" target="_blank" class="footer-link">Telegram</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
