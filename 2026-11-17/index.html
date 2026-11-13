@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link class="icon" type="image/ico" href="../ico/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../ico/favicon.ico" />
     <title>Буткемп: вводный созвон карьерного блока</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -66,9 +66,9 @@
 
         .back {
             position: fixed;
-            top: 4.8rem; left: 2.5rem;
-            color: #888; text-decoration: none; font-size: 0.85rem;
-            transition: color 0.2s; z-index: 100;
+            bottom: 1.5rem; left: 2.5rem;
+            color: #888; text-decoration: none; font-size: 0.95rem;
+            transition: color 0.2s; z-index: 10000;
         }
         .back:hover { color: #333; }
         
@@ -469,14 +469,18 @@
             width: 90%;
             max-height: 85vh;
             overflow-y: auto;
-            z-index: 1000;
+            z-index: 10001;
             box-shadow: 0 20px 80px rgba(0, 0, 0, 0.15);
             animation: popIn 0.25s ease;
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: translate(-50%, -48%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
         }
         .hint-popup.active { display: block; }
         .hint-popup blockquote {
             margin: 0;
-            border-left: 4px solid #2d758b;
+            border-left: 4px solid #ff9900;
             padding: 1rem 1.5rem;
             background: rgba(0, 0, 0, 0.02);
             border-radius: 8px;
@@ -538,6 +542,41 @@
             margin-left: 10px;
         }
 
+        .image-popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10002;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .image-popup.active { display: flex; }
+        .image-popup img {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #ececf1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
         .orange-break-slide .waves-decor {
             position: absolute;
             width: 100%;
@@ -552,7 +591,11 @@
 <body>
     <div class="background-waves"></div>
     <div class="overlay" id="overlay"></div>
-    
+    <div class="image-popup" id="image-popup" onclick="closePopup()">
+        <img id="popup-img" src="" alt="Мем">
+    </div>
+    <a href="../index.html" class="back">← Назад к меню</a>
+
     <div class="logo-container">
         <div class="logo-box">С</div>
         <div class="logo-text">имулейтив</div>
@@ -878,7 +921,7 @@
                         <path d="M0 420C230 470 430 620 480 720" />
                     </g>
                 </svg>
-                <img src="../images/women.png" alt="Pointing Illustration" style="position: absolute; right: 5%; bottom: 0; max-height: 52vh; width: auto; object-fit: contain; z-index: 2; pointer-events: none;">
+                <img src="../images/women.png" alt="Pointing Illustration" style="position: absolute; right: 5%; bottom: 0; height: 75vh; max-height: 95%; width: auto; object-fit: contain; z-index: 2; pointer-events: none;">
                 <div class="text-container">
                     <h1>Перерыв на<br>вопросы</h1>
                 </div>
@@ -889,24 +932,24 @@
                 <ul class="plan-list">
                     <li>
                         <span>Резюме с хорошим разделом "О себе"</span>
-                        <button class="hint-btn" data-hint="hint-1">?</button>
-                        <div class="hint-popup" id="hint-1">
+                        <button class="hint-btn" data-hint="hint-11-1">?</button>
+                        <div class="hint-popup" id="hint-11-1">
                             <button class="hint-close">&times;</button>
                             <blockquote>Понятная информация о кандидате без ошибок и зарплатных ожиданий с указанием желаемой должности и узкой специализации. С описанием только релевантного опыта работы  (с фразами из вакансии) в формате достижения + обязанности + стек технологий.</blockquote>
                         </div>
                     </li>
                     <li>
                         <span>Хорошо оформленное портфолио</span>
-                        <button class="hint-btn" data-hint="hint-2">?</button>
-                        <div class="hint-popup" id="hint-2">
+                        <button class="hint-btn" data-hint="hint-11-2">?</button>
+                        <div class="hint-popup" id="hint-11-2">
                             <button class="hint-close">&times;</button>
                             <blockquote>С примерами рабочих, учебных или самостоятельных проектов, выполненных с использованием максимального количества знакомых вам инструментов.</blockquote>
                         </div>
                     </li>
                         <li>
                         <span>Сопроводительное письмо</span>
-                        <button class="hint-btn" data-hint="hint-3">?</button>
-                        <div class="hint-popup" id="hint-3">
+                        <button class="hint-btn" data-hint="hint-11-3">?</button>
+                        <div class="hint-popup" id="hint-11-3">
                             <button class="hint-close">&times;</button>
                             <blockquote>Вежливое сообщение с соблюдением tov компании и четким указанием, на какую вакансию и почему вы претендуете. Рассказ о своих релевантных достижениях с упоминанием hard и soft skills. Завершение в виде контактов для связи, ссылки на портфолио и "крючка".</blockquote>
                         </div>
@@ -936,7 +979,7 @@
             </div>
             <div class="v-card">
                 <span class="v-card-icon">📊</span>
-                <span class="v-card-text">Только релевантый опыт: обязанности, достижения (с цифрами) и стек технологий/span>
+                <span class="v-card-text">Только релевантый опыт: обязанности, достижения (с цифрами) и стек технологий</span>
             </div>
             <div class="v-card">
                 <span class="v-card-icon">🎓</span>
@@ -1007,40 +1050,40 @@
                 <ul class="plan-list">
                 <li>
                     <span>Нынешняя должность + опыт</span>
-                    <button class="hint-btn" data-hint="hint-1">?</button>
-                    <div class="hint-popup" id="hint-1">
+                    <button class="hint-btn" data-hint="hint-14-1">?</button>
+                    <div class="hint-popup" id="hint-14-1">
                         <button class="hint-close">&times;</button>
                         <blockquote>Начинающий аналитик данных с пятилетним бэкграундом в сфере логистики. Прошел интенсивную аналитическую переподготовку на курсах Ромашка-аналитик (900+ часов практики), сфокусированную на статистическом анализе и поиске закономерностей в больших массивах данных.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Ключевые достижения</span>
-                    <button class="hint-btn" data-hint="hint-2">?</button>
-                    <div class="hint-popup" id="hint-2">
+                    <button class="hint-btn" data-hint="hint-14-2">?</button>
+                    <div class="hint-popup" id="hint-14-2">
                         <button class="hint-close">&times;</button>
                         <blockquote>В рамках дипломного проекта провел A/B тест для гипотетического маркетплейса: выявил статистически значимое различие в конверсии, что потенциально увеличило бы выручку на 8%. На текущем месте работы автоматизировал отчеты в Excel через Power Query, сократив время их подготовки с 3 часов до 10 минут.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Hard Skills</span>
-                    <button class="hint-btn" data-hint="hint-3">?</button>
-                    <div class="hint-popup" id="hint-3">
+                    <button class="hint-btn" data-hint="hint-14-3">?</button>
+                    <div class="hint-popup" id="hint-14-3">
                         <button class="hint-close">&times;</button>
                         <blockquote>Стек: SQL (сложные запросы, JOINs, оконные функции), Python (Pandas, NumPy, Matplotlib/Seaborn), визуализация данных в Tableau и Power BI, базовое владение статистическими критериями (T-test, Mann-Whitney).</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Soft Skills</span>
-                    <button class="hint-btn" data-hint="hint-4">?</button>
-                    <div class="hint-popup" id="hint-4">
+                    <button class="hint-btn" data-hint="hint-14-4">?</button>
+                    <div class="hint-popup" id="hint-14-4">
                         <button class="hint-close">&times;</button>
                         <blockquote>Благодаря опыту в логистике умею переводить запросы бизнеса на технический язык. Обладаю навыком презентации сложных выводов простыми словами, что подтверждено успешной защитой трех аналитических кейсов перед экспертами индустрии.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Что ищем + контакты</span>
-                    <button class="hint-btn" data-hint="hint-5">?</button>
-                    <div class="hint-popup" id="hint-5">
+                    <button class="hint-btn" data-hint="hint-14-5">?</button>
+                    <div class="hint-popup" id="hint-14-5">
                         <button class="hint-close">&times;</button>
                         <blockquote>Ищу позицию Junior Data Analyst в продуктовой или ритейл компании, где смогу применять навыки SQL и Python для оптимизации внутренних процессов и работы с реальными продуктовыми метриками.<br>Иван Иванов, +7-9XX-XXX-XX-XX, Telegram, Портфолио.</blockquote>
                     </div>
@@ -1050,8 +1093,8 @@
             <div class="slide" data-slide="15">
                 <h1 style="font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-bottom: 5px; text-align: left;">Сопроводительное письмо</h1>
                 
-                <div style="display: flex; width: 100%; align-items: center; justify-content: flex-start; gap: 30px;">
-                    <div style="flex: 0 0 420px; display: flex; align-items: flex-end;">
+                <div style="display: flex; width: 100%; align-items: center; justify-content: flex-start; gap: 30px; margin-left: -5vw;">
+                    <div style="flex: 0 0 546px; display: flex; align-items: flex-end;">
                         <img src="../images/Cover.png" alt="Pointing Illustration" style="width: 100%; height: auto; object-fit: contain;">
                     </div>
 
@@ -1091,24 +1134,24 @@
             <ul class="plan-list">
                 <li>
                     <span>Приветствие + вакансия и компания</span>
-                    <button class="hint-btn" data-hint="hint-1">?</button>
-                    <div class="hint-popup" id="hint-1">
+                    <button class="hint-btn" data-hint="hint-16-1">?</button>
+                    <div class="hint-popup" id="hint-16-1">
                         <button class="hint-close">&times;</button>
                         <blockquote>Добрый день! Меня зовут Наталья.<br>Меня заинтересовала вакансия Аналитика данных в вашей компании Ромашка. Я давно слежу за вашим продуктом, мне импонирует ваш подход к сегментации аудитории, который вы осуществили в последнем обновлении.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Кто вы?</span>
-                    <button class="hint-btn" data-hint="hint-2">?</button>
-                    <div class="hint-popup" id="hint-2">
+                    <button class="hint-btn" data-hint="hint-16-2">?</button>
+                    <div class="hint-popup" id="hint-16-2">
                         <button class="hint-close">&times;</button>
                         <blockquote>Я опытный аналитик данных (работаю на аналогичных должностях 3 года) с бэкграундом в финансах и банковской сфере. Мой основной фокус - продуктовая аналитика и автоматизация отчетности.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Почему именно вы?</span>
-                    <button class="hint-btn" data-hint="hint-3">?</button>
-                    <div class="hint-popup" id="hint-3">
+                    <button class="hint-btn" data-hint="hint-16-3">?</button>
+                    <div class="hint-popup" id="hint-16-3">
                         <button class="hint-close">&times;</button>
                         <blockquote>Почему именно я буду полезна вашей команде:<br>
                             <ul>
@@ -1121,24 +1164,24 @@
                 </li>
                 <li>
                     <span>Soft Skills</span>
-                    <button class="hint-btn" data-hint="hint-4">?</button>
-                    <div class="hint-popup" id="hint-4">
+                    <button class="hint-btn" data-hint="hint-16-4">?</button>
+                    <div class="hint-popup" id="hint-16-4">
                         <button class="hint-close">&times;</button>
                         <blockquote>Я не просто «выгружаю данные», а перевожу их на язык бизнеса. Моя фишка - умение визуализировать сложные метрики так, что их понимает даже нетехнический отдел.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Призыв к действию</span>
-                    <button class="hint-btn" data-hint="hint-5">?</button>
-                    <div class="hint-popup" id="hint-5">
+                    <button class="hint-btn" data-hint="hint-16-5">?</button>
+                    <div class="hint-popup" id="hint-16-5">
                         <button class="hint-close">&times;</button>
                         <blockquote>Буду рада обсудить, как мой опыт поможет вашей команде улучшить показатели и ускорить процессы.</blockquote>
                     </div>
                 </li>
                 <li>
                     <span>Контакты и ссылки + ФИ</span>
-                    <button class="hint-btn" data-hint="hint-6">?</button>
-                    <div class="hint-popup" id="hint-6">
+                    <button class="hint-btn" data-hint="hint-16-6">?</button>
+                    <div class="hint-popup" id="hint-16-6">
                         <button class="hint-close">&times;</button>
                         <blockquote>Ссылка на мое портфолио:<br>Telegram:<br>Телефон:<br>С уважением, Рожкова Наталья</blockquote>
                     </div>
@@ -1203,20 +1246,19 @@
                 
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%;">
                     
-                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                    <div class="summary-card">
                         <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;"> 📌 Выводы</span>
                     </div>
 
-                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                    <div class="summary-card">
                         <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;"> 🤝 Договоренности</span>
                     </div>
 
-                    <div style="background: #ffffff; border-radius: 16px; padding: 24px; border: 1px solid #ececf1; display: flex; flex-direction: column; align-items: center;">
+                    <div class="summary-card">
                         <span style="font-size: 22px; font-weight: 600; margin-bottom: 20px;"> 📅 Планы</span>
                     </div>
                 </div>
             </div>
-        </div>
             <div class="slide orange-break-slide" data-slide="20">
                 <svg class="waves-decor" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g opacity="0.4" stroke="white" stroke-width="1">
@@ -1312,6 +1354,19 @@
         });
 
         document.getElementById('overlay').addEventListener('click', closeAllHints);
+
+        function openPopup(src) {
+            document.getElementById('popup-img').src = src;
+            document.getElementById('image-popup').classList.add('active');
+        }
+
+        function closePopup() {
+            document.getElementById('image-popup').classList.remove('active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') { closeAllHints(); closePopup(); }
+        });
     </script>
 </body>
 </html>
